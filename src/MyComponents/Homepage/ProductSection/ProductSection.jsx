@@ -33,30 +33,27 @@ const ProductSection = () => {
   // const [products, setProducts] = useState([]);
   // const [subCat, setSubCat] = useState([]);
   // shoes category id pass manually
-  let id="6527bda093ce9e25be1d7303";
+
+  let id = "6527bda093ce9e25be1d7303";
 
   const addToWishlistHandler = (product) => {
     console.log("wishlist clicked");
 
-  
-  const existingWishlist = localStorage.getItem('userWishlist');
+    const existingWishlist = localStorage.getItem("userWishlist");
 
-  
-  const userWishlist = existingWishlist ? JSON.parse(existingWishlist) : [];
+    const userWishlist = existingWishlist ? JSON.parse(existingWishlist) : [];
 
-  
-  userWishlist.push(product);
-  console.log("userWishlist", userWishlist)
+    userWishlist.push(product);
+    console.log("userWishlist", userWishlist);
 
-  
-  localStorage.setItem('userWishlist', JSON.stringify(userWishlist));
-  toast.success("Added to Wishlist");
-  }
+    localStorage.setItem("userWishlist", JSON.stringify(userWishlist));
+    toast.success("Added to Wishlist");
+  };
 
   // get all products
   const [products, setProducts] = useState([]);
-  const getProducts = async() => {
-    console.log("ls",(localStorage.getItem("boon")))
+  const getProducts = async () => {
+    console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/products`;
     try {
       const res = await axios.get(url, {
@@ -64,44 +61,40 @@ const ProductSection = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("product from product section",res.data.products);
+      console.log("product from product section", res.data.products);
       setProducts(res.data.products);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  useEffect(() => {  
-    getProducts();    
+  useEffect(() => {
+    getProducts();
   }, []);
 
   // add to cart
-  const addToCartHandler = async(id) => {
-
-    console.log("add to cart clicked")
-    if(localStorage.getItem("boon")){
-
+  const addToCartHandler = async (id) => {
+    console.log("add to cart clicked");
+    if (localStorage.getItem("boon")) {
       let url = `${Baseurl()}api/v1/cart`;
 
       try {
-        const body = {productId: id, quantity: 1}
+        const body = { productId: id, quantity: 1 };
         const res = await axios.post(url, body, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("boon")}`,
           },
-        }, );
-        console.log("cart response",res);
+        });
+        console.log("add to cart data golu", res);
         toast.success("Added to Cart");
-        navigate('/cart')
+        navigate("/cart");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }else{
-        toast.info("please first login")
+    } else {
+      toast.info("please first login");
     }
-
-  }
-
+  };
 
   const SlideLeft = () => {
     var slider = document.getElementById("slider");
@@ -171,38 +164,50 @@ const ProductSection = () => {
               id="slider3"
               className=" fashrightcont w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
             >
-
-              {products.length > 0 ? products.map((product, i) => {
-                if(product.images.length > 0){
-
-                return <>
-                <div
-                className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "
-                style={{ border: "1px solid #333;" }}
-              >
-                <img
-                  onClick={() => {
-                    navigate(`/categoryproducts/${product._id}`);
-                  }}
-                  src={product.images[0]}
-                  alt=""
-                  className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
-                />
-                <h2 className="text-lg font-medium mb-2">{product.name}</h2>
-                <div
-                 className="flex justify-between border-t items-center pt-3">
-                  <h3 className="text-base">₹ {product.price}</h3>
-                  <button style={{margin: "3px"}} onClick={() => addToWishlistHandler(product)} className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md">
-                    Wishlist
-                  </button>
-                  <button className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md" onClick={()=>addToCartHandler(product._id)}>
-                    Buy Now
-                  </button>
-                </div>
-              </div>
-                </>
-                }
-              }) : <div>Loading...</div>}
+              {products.length > 0 ? (
+                products.map((product, i) => {
+                  if (product.images.length > 0) {
+                    return (
+                      <>
+                        <div
+                          className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "
+                          style={{ border: "1px solid #333;" }}
+                        >
+                          <img
+                            onClick={() => {
+                              navigate(`/categoryproducts/${product._id}`);
+                            }}
+                            src={product.images[0]}
+                            alt=""
+                            className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
+                          />
+                          <h2 className="text-lg font-medium mb-2">
+                            {product.name}
+                          </h2>
+                          <div className="flex justify-between border-t items-center pt-3">
+                            <h3 className="text-base">₹ {product.price}</h3>
+                            <button
+                              style={{ margin: "3px" }}
+                              onClick={() => addToWishlistHandler(product)}
+                              className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md"
+                            >
+                              Wishlist
+                            </button>
+                            <button
+                              className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md"
+                              onClick={() => addToCartHandler(product._id)}
+                            >
+                              Buy Now
+                            </button>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  }
+                })
+              ) : (
+                <div>Loading...</div>
+              )}
 
               {/* <div
                 className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "
@@ -335,39 +340,54 @@ const ProductSection = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6">
           <div className="offer">
             <img src={img2} alt="" style={{ position: "relative" }} />
-            <button onClick={() => navigate(`popular/product`)}>View All</button>
+            <button onClick={() => navigate(`popular/product`)}>
+              View All
+            </button>
           </div>
-          {products.length > 0 ? products.slice(0,24).map((product, i) => {
-                if(product.images.length > 0){
-                return <>
-                <div
-                className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "
-                style={{ border: "1px solid #333;" }}
-              >
-                <img
-                  onClick={() => {
-                    navigate(`/categoryproducts/${product._id}`);
-                  }}
-                  src={product.images[0]}
-                  alt=""
-                  className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
-                />
-                <h2 className="text-lg font-medium mb-2">{product.name}</h2>
-                <div
-                 className="flex justify-between border-t items-center pt-3">
-                  <h3 className="text-base">₹ {product.price}</h3>
-                  <button style={{margin: "3px"}} onClick={() => addToWishlistHandler(product)} className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md">
-                   Wishlist
-                  </button>
-                  <button onClick={()=>addToCartHandler(product._id)} className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md">
-                    Buy Now
-                  </button>
-                </div>
-              </div>
-                </>
-                }
-              }) : <div>Loading...</div>}
-
+          {products.length > 0 ? (
+            products.slice(0, 24).map((product, i) => {
+              if (product.images.length > 0) {
+                return (
+                  <>
+                    <div
+                      className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "
+                      style={{ border: "1px solid #333;" }}
+                    >
+                      <img
+                        onClick={() => {
+                          navigate(`/categoryproducts/${product._id}`);
+                        }}
+                        src={product.images[0]}
+                        alt=""
+                        className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
+                      />
+                      <h2 className="text-lg font-medium mb-2">
+                        {product.name}
+                      </h2>
+                      <div className="flex justify-between border-t items-center pt-3">
+                        <h3 className="text-base">₹ {product.price}</h3>
+                        <button
+                          style={{ margin: "3px" }}
+                          onClick={() => addToWishlistHandler(product)}
+                          className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md"
+                        >
+                          Wishlist
+                        </button>
+                        <button
+                          onClick={() => addToCartHandler(product._id)}
+                          className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md"
+                        >
+                          Buy Now
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                );
+              }
+            })
+          ) : (
+            <div>Loading...</div>
+          )}
 
           {/* <div className="product-card m-2 bg-white shadow-lg p-3  border rounded-lg">
             <img
@@ -474,7 +494,9 @@ const ProductSection = () => {
           <div className="bannerimg">
             <div className="offer">
               <img src={img13} alt="" className="homeimg" />
-              <button onClick={() => navigate(`complete/categorywise/product/${id}`)}>
+              <button
+                onClick={() => navigate(`complete/categorywise/product/${id}`)}
+              >
                 View All
               </button>
             </div>
@@ -485,40 +507,50 @@ const ProductSection = () => {
               id="slider"
               className=" fashrightcont w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
             >
-               {products.length > 0 ? products.map((product, i) => {
-                if(product.images.length > 0){
-
-                return <>
-                <div
-                className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "
-                style={{ border: "1px solid #333;" }}
-              >
-                <img
-                  onClick={() => {
-                    navigate(`/categoryproducts/${product._id}`);
-                  }}
-                  src={product.images[0]}
-                  alt=""
-                  className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
-                />
-                <h2 className="text-lg font-medium mb-2">{product.name}</h2>
-                <div
-                 className="flex justify-between border-t items-center pt-3">
-                  <h3 className="text-base">₹ {product.price}</h3>
-                  <button style={{margin: "3px"}} onClick={() => addToWishlistHandler(product)} className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md">
-                   Wishlist
-                  </button>
-                  <button onClick={()=>addToCartHandler(product._id)} className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md">
-                    Buy Now
-                  </button>
-                </div>
-              </div>
-                </>
-                }
-              }) : <div>Loading...</div>}   
-
-
-
+              {products.length > 0 ? (
+                products.map((product, i) => {
+                  if (product.images.length > 0) {
+                    return (
+                      <>
+                        <div
+                          className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "
+                          style={{ border: "1px solid #333;" }}
+                        >
+                          <img
+                            onClick={() => {
+                              navigate(`/categoryproducts/${product._id}`);
+                            }}
+                            src={product.images[0]}
+                            alt=""
+                            className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
+                          />
+                          <h2 className="text-lg font-medium mb-2">
+                            {product.name}
+                          </h2>
+                          <div className="flex justify-between border-t items-center pt-3">
+                            <h3 className="text-base">₹ {product.price}</h3>
+                            <button
+                              style={{ margin: "3px" }}
+                              onClick={() => addToWishlistHandler(product)}
+                              className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md"
+                            >
+                              Wishlist
+                            </button>
+                            <button
+                              onClick={() => addToCartHandler(product._id)}
+                              className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md"
+                            >
+                              Buy Now
+                            </button>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  }
+                })
+              ) : (
+                <div>Loading...</div>
+              )}
 
               {/* <div
                 className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "
@@ -650,7 +682,11 @@ const ProductSection = () => {
           <div className="bannerimg">
             <div className="offer">
               <img src={img14} alt="" className="homeimg" />
-              <button onClick={() => navigate(`complete/categorywise/product/${id}`)}>View All</button>
+              <button
+                onClick={() => navigate(`complete/categorywise/product/${id}`)}
+              >
+                View All
+              </button>
             </div>
           </div>
           <div className="relative flex items-center homeslider">
@@ -659,40 +695,50 @@ const ProductSection = () => {
               id="slider2"
               className=" fashrightcont w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
             >
-              {products.length > 0 ? products.map((product, i) => {
-                if(product.images.length > 0){
-
-                return <>
-                <div
-                className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "
-                style={{ border: "1px solid #333;" }}
-              >
-                <img
-                  onClick={() => {
-                    navigate(`/categoryproducts/${product._id}`);
-                  }}
-                  src={product.images[0]}
-                  alt=""
-                  className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
-                />
-                <h2 className="text-lg font-medium mb-2">{product.name}</h2>
-                <div
-                 className="flex justify-between border-t items-center pt-3">
-                  <h3 className="text-base">₹ {product.price}</h3>
-                  <button style={{margin: "3px"}} onClick={() => addToWishlistHandler(product)} className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md">
-                    Wishlist
-                  </button>
-                  <button onClick={()=>addToCartHandler(product._id)} className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md">
-                    Buy Now
-                  </button>
-                </div>
-              </div>
-                </>
-                }
-              }) : <div>Loading...</div>}
-
-
-
+              {products.length > 0 ? (
+                products.map((product, i) => {
+                  if (product.images.length > 0) {
+                    return (
+                      <>
+                        <div
+                          className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "
+                          style={{ border: "1px solid #333;" }}
+                        >
+                          <img
+                            onClick={() => {
+                              navigate(`/categoryproducts/${product._id}`);
+                            }}
+                            src={product.images[0]}
+                            alt=""
+                            className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
+                          />
+                          <h2 className="text-lg font-medium mb-2">
+                            {product.name}
+                          </h2>
+                          <div className="flex justify-between border-t items-center pt-3">
+                            <h3 className="text-base">₹ {product.price}</h3>
+                            <button
+                              style={{ margin: "3px" }}
+                              onClick={() => addToWishlistHandler(product)}
+                              className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md"
+                            >
+                              Wishlist
+                            </button>
+                            <button
+                              onClick={() => addToCartHandler(product._id)}
+                              className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md"
+                            >
+                              Buy Now
+                            </button>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  }
+                })
+              ) : (
+                <div>Loading...</div>
+              )}
 
               {/* <div
                 className="gproduct-card m-2 bg-white shadow-lg p-3  border rounded-lg w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300 "

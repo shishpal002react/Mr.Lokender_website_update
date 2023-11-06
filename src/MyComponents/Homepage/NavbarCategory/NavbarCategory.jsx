@@ -1,4 +1,4 @@
-import React, {  useContext, useEffect ,useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Baseurl from "../../../Baseurl";
 import axios from "axios";
@@ -12,16 +12,15 @@ import img7 from "../../../Images/d7.png";
 import img8 from "../../../Images/d8.png";
 import img9 from "../../../Images/d9.png";
 import img2 from "../../../Images/d2.png";
-import {MyContext } from ".././MyContext";
+import { MyContext } from ".././MyContext";
 
 const NavbarCategory = () => {
-  const {show, setShow} = useContext(MyContext);
-  const [subcategary,setSabcategary]=useState([]);
+  const { show, setShow } = useContext(MyContext);
+  const [subcategary, setSabcategary] = useState([]);
   const navigate = useNavigate();
 
-  
-  const allCategary = async() => {
-    console.log("ls",(localStorage.getItem("boon")))
+  const allCategary = async () => {
+    console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/admin/allCategory`;
     try {
       const res = await axios.get(url, {
@@ -29,17 +28,17 @@ const NavbarCategory = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("product from categary",res.data.categories);
+      console.log("product from categary", res.data.categories);
       setSabcategary(res.data.categories);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     allCategary();
-  },[])
-  
+  }, []);
+
   return (
     <>
       {/* <div className="hometop2">
@@ -84,138 +83,158 @@ const NavbarCategory = () => {
 
       <div className="hometop2">
         <div className="hometop2cont">
-          {   
-              subcategary.map((item,i)=>(
-                <div className="hometopitm" key={i} onClick={()=>navigate(`/categoryproducts/${item._id}`)}>
+          {subcategary?.slice(0, 8)?.map((item, i) => (
+            <div
+              className="hometopitm"
+              key={i}
+              onClick={() => navigate(`/categoryproducts/${item._id}`)}
+            >
               <img src={item.image} alt="" />
               <p>{item.name.toUpperCase()}</p>
             </div>
-              ))
-          }
-      </div> 
+          ))}
+        </div>
 
-        <div className="menubar" onClick={()=>setShow(true)}>
-            <i class="fa-solid fa-bars"></i>
+        <div className="menubar" onClick={() => setShow(true)}>
+          <i class="fa-solid fa-bars"></i>
         </div>
-        { show ? 
-        <div className="hometop3cont">
-        <div className="hometopitm3">
-            <p>Electronics</p>
-                <div class="dropdown">    
-                    <i class="fa-solid fa-circle-chevron-down"></i>  
-                    <div class="dropdown-content">
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                    </div>
+        {show ? (
+          <div className="hometop3cont">
+            <div className="hometopitm3">
+              <p>Electronics</p>
+              <div class="dropdown">
+                <i class="fa-solid fa-circle-chevron-down"></i>
+                <div class="dropdown-content">
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
                 </div>
-          </div>
-          <div className="hometopitm3">
-            <p>TV & Appliances</p>
-                <div class="dropdown">    
-                    <i class="fa-solid fa-circle-chevron-down"></i>  
-                    <div class="dropdown-content">
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                    </div>
+              </div>
+            </div>
+            <div className="hometopitm3">
+              <p>TV & Appliances</p>
+              <div class="dropdown">
+                <i class="fa-solid fa-circle-chevron-down"></i>
+                <div class="dropdown-content">
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
                 </div>
-          </div>
-          <div className="hometopitm3">
-            <p>Men</p>
-                <div class="dropdown">    
-                    <i class="fa-solid fa-circle-chevron-down"></i>  
-                    <div class="dropdown-content">
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                    </div>
+              </div>
+            </div>
+            <div className="hometopitm3">
+              <p>Men</p>
+              <div class="dropdown">
+                <i class="fa-solid fa-circle-chevron-down"></i>
+                <div class="dropdown-content">
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
                 </div>
-          </div>
-          <div className="hometopitm3">
-            <p>Women</p>
-                <div class="dropdown">    
-                    <i class="fa-solid fa-circle-chevron-down"></i>  
-                    <div class="dropdown-content">
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                    </div>
+              </div>
+            </div>
+            <div className="hometopitm3">
+              <p>Women</p>
+              <div class="dropdown">
+                <i class="fa-solid fa-circle-chevron-down"></i>
+                <div class="dropdown-content">
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
                 </div>
-          </div>
-          <div className="hometopitm3">
-            <p>Baby & Kids</p>
-                <div class="dropdown">    
-                    <i class="fa-solid fa-circle-chevron-down"></i>  
-                    <div class="dropdown-content">
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                    </div>
+              </div>
+            </div>
+            <div className="hometopitm3">
+              <p>Baby & Kids</p>
+              <div class="dropdown">
+                <i class="fa-solid fa-circle-chevron-down"></i>
+                <div class="dropdown-content">
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
                 </div>
-          </div>
-          <div className="hometopitm3">
-            <p>Home & Furniture</p>
-                <div class="dropdown">    
-                    <i class="fa-solid fa-circle-chevron-down"></i>  
-                    <div class="dropdown-content">
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                    </div>
+              </div>
+            </div>
+            <div className="hometopitm3">
+              <p>Home & Furniture</p>
+              <div class="dropdown">
+                <i class="fa-solid fa-circle-chevron-down"></i>
+                <div class="dropdown-content">
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
                 </div>
-          </div>
-          <div className="hometopitm3">
-            <p>Books & More</p>
-                <div class="dropdown">    
-                    <i class="fa-solid fa-circle-chevron-down"></i>  
-                    <div class="dropdown-content">
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                    </div>
+              </div>
+            </div>
+            <div className="hometopitm3">
+              <p>Books & More</p>
+              <div class="dropdown">
+                <i class="fa-solid fa-circle-chevron-down"></i>
+                <div class="dropdown-content">
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
                 </div>
-          </div>
-          <div className="hometopitm3">
-            <p>Grocery</p>
-                <div class="dropdown">    
-                    <i class="fa-solid fa-circle-chevron-down"></i>  
-                    <div class="dropdown-content">
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                        <p>Lorem Ipsum</p>
-                    </div>
+              </div>
+            </div>
+            <div className="hometopitm3">
+              <p>Grocery</p>
+              <div class="dropdown">
+                <i class="fa-solid fa-circle-chevron-down"></i>
+                <div class="dropdown-content">
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
+                  <p>Lorem Ipsum</p>
                 </div>
+              </div>
+            </div>
+            <div className="hometopitm3" onClick={() => navigate("/rent")}>
+              <p>Rent</p>
+            </div>
+            <div
+              className="hometopitm3"
+              onClick={() => navigate("/seller-registration")}
+            >
+              <p>Become a Member</p>
+            </div>
+            <div
+              className="hometopitm3"
+              onClick={() => navigate("/user/signup")}
+            >
+              <p>Sign Up</p>
+            </div>
+            <div
+              className="hometopitm3"
+              onClick={() => navigate("/user/login")}
+            >
+              <p>Login</p>
+            </div>
+            <div className="hometopitm3">
+              <button
+                onClick={() => setShow(false)}
+                style={{
+                  marginBottom: "10%",
+                  backgroundColor: "#333",
+                  color: "#fff",
+                  width: "40%",
+                  height: "40px",
+                }}
+              >
+                Close
+              </button>
+            </div>
           </div>
-          <div className="hometopitm3" onClick={()=>navigate("/rent")}>
-            <p>Rent</p>
-          </div>
-          <div className="hometopitm3" onClick={()=>navigate("/seller-registration")}>
-            <p>Become a Member</p>
-          </div>
-          <div className="hometopitm3" onClick={()=>navigate("/user/signup")}>
-            <p>Sign Up</p>
-          </div>
-          <div className="hometopitm3" onClick={()=>navigate("/user/login")}>
-            <p>Login</p>
-          </div>
-          <div className="hometopitm3">
-            <button onClick={()=>setShow(false)}
-                style={{marginBottom:"10%", backgroundColor:"#333", color:"#fff", width:"40%", height:"40px"}}
-            >Close</button>
-          </div>
-        </div>
-              :
-              ""
-                }
+        ) : (
+          ""
+        )}
       </div>
       {/*<div className=" hidden md:flex justify-between space-x-10 m-8 mx-10 ">
         <div

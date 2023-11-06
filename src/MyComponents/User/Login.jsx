@@ -46,7 +46,6 @@ const Login = () => {
     otpVerify(otp);
   };
 
-
   const logIn = async (data) => {
     const mobile = {
       mobileNumber: data,
@@ -71,7 +70,6 @@ const Login = () => {
     logIn(mobileNumber);
   };
 
-  
   return (
     <>
       <Navbar />

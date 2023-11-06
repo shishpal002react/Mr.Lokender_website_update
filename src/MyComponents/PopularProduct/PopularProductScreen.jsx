@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from "react";
 
 import img5 from "../../Images/d57.png";
-import { useNavigate} from "react-router-dom";
-import {MdChevronLeft, MdChevronRight} from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import axios from "axios";
 import Baseurl from "../../Baseurl";
 // import { OfferData } from './../../ArrayData/ArrayData';
 
 const PopularProductScreen = () => {
-
   const navigate = useNavigate();
-  const SlideLeft = ()=>{
-    var slider = document.getElementById('slider')
-    slider.scrollLeft = slider.scrollLeft-500
-  }
-  const SlideRight = ()=>{
-    var slider = document.getElementById('slider')
-    slider.scrollLeft = slider.scrollLeft+500
-  }
+  const SlideLeft = () => {
+    var slider = document.getElementById("slider");
+    slider.scrollLeft = slider.scrollLeft - 500;
+  };
+  const SlideRight = () => {
+    var slider = document.getElementById("slider");
+    slider.scrollLeft = slider.scrollLeft + 500;
+  };
 
   //api show catogery is calling
   const [offerData, setOfferData] = useState([]);
-  const getProducts = async() => {
-    console.log("ls",(localStorage.getItem("boon")))
+  const getProducts = async () => {
+    console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/my/products/popular`;
     try {
       const res = await axios.get(url, {
@@ -30,47 +29,45 @@ const PopularProductScreen = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("offer product",res.data.data);
+      console.log("offer product", res.data.data);
       setOfferData(res.data.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  
+  };
 
-  useEffect(() => {  
-    getProducts();    
+  useEffect(() => {
+    getProducts();
   }, []);
 
-//   //filter offerData
-//   const [searchData, setSearchData] = useState([]);
-//   const [searchofferData,setSearchofferData]=useState([]);
-//   const getSearchData = async() => {
-//     console.log("ls",(localStorage.getItem("boon")))
-//     let url = `${Baseurl()}api/v1/filters?minPrice=0000&maxPrice=3999&offerDataId=64a2d0a125dba018a6e0a5c6&brand=`
-//     try {
-//       const res = await axios.get(url, {
-//         headers: {
-//           Authorization: `Bearer ${localStorage.getItem("boon")}`,
-//         },
-//       });
-//       console.log("product from shoes section",res.data.products);
-//       setSearchData(res.data.products);
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   }
-  
-// //depandance is required to add
-//   useEffect(() => {  
-//     getSearchData();    
-//   }, []);
+  //   //filter offerData
+  //   const [searchData, setSearchData] = useState([]);
+  //   const [searchofferData,setSearchofferData]=useState([]);
+  //   const getSearchData = async() => {
+  //     console.log("ls",(localStorage.getItem("boon")))
+  //     let url = `${Baseurl()}api/v1/filters?minPrice=0000&maxPrice=3999&offerDataId=64a2d0a125dba018a6e0a5c6&brand=`
+  //     try {
+  //       const res = await axios.get(url, {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("boon")}`,
+  //         },
+  //       });
+  //       console.log("product from shoes section",res.data.products);
+  //       setSearchData(res.data.products);
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
 
+  // //depandance is required to add
+  //   useEffect(() => {
+  //     getSearchData();
+  //   }, []);
 
   return (
     <>
       <div className="fashviewcont">
-      <div className="fashviewcontl">
+        <div className="fashviewcontl">
           <h3>Filters</h3>
           <div className="filtercont ft">
             <div className="filteritem">
@@ -194,53 +191,50 @@ const PopularProductScreen = () => {
           </div>
         </div>
         <div className="fashviewcontr">
-        <div className="relative flex items-center">
+          <div className="relative flex items-center">
             <MdChevronLeft onClick={SlideLeft} size={40} />
             <div
               id="slider"
               className=" fashrightcont w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
             >
-               
               <div className="fashrightlabel w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300">
-              { 
-                    offerData.map((item)=>(
-                        <h3>{item?.productId?.brand}</h3>
-                    ))
-                }
+                {offerData.map((item) => (
+                  <h3>{item?.productId?.brand}</h3>
+                ))}
               </div>
-              
             </div>
             <MdChevronRight onClick={SlideRight} size={40} />
           </div>
           <div className="fashrightprod">
             <div className="fashrightproditm">
               <div className="rff">
-                {
-                    offerData.slice(0,4).map((item)=>(
-                        <div className="proditm">
-                  <img src={item?.images?.[0]} onClick={()=>navigate(`/singleprodoctview/${item._id}`)}  alt="" />
-                  <div className="proditmflex">
-                    <h5>{item.name}</h5>
-                    <button>80% off</button>
-                  </div>
-                  <div className="proditmflex">
-                    <p>{item.description}</p>
-                    <div className="staricon">
-                      <i className="fas fa-star"></i>
-                      <i className="fas fa-star"></i>
-                      <i className="fas fa-star"></i>
-                      <i className="fas fa-star"></i>
+                {offerData.slice(0, 4).map((item) => (
+                  <div className="proditm">
+                    <img
+                      src={item?.images?.[0]}
+                      onClick={() => navigate(`/singleprodoctview/${item._id}`)}
+                      alt=""
+                    />
+                    <div className="proditmflex">
+                      <h5>{item.name}</h5>
+                      <button>80% off</button>
                     </div>
+                    <div className="proditmflex">
+                      <p>{item.description}</p>
+                      <div className="staricon">
+                        <i className="fas fa-star"></i>
+                        <i className="fas fa-star"></i>
+                        <i className="fas fa-star"></i>
+                        <i className="fas fa-star"></i>
+                      </div>
+                    </div>
+                    <div className="proditmflex">
+                      <h6>&#x20B9; {item.price}</h6>
+                      <img src={img5} alt="" />
+                    </div>
+                    {/* <p className="lsttxt">Free delivery Shubharambh99</p> */}
                   </div>
-                  <div className="proditmflex">
-                    <h6>&#x20B9; {item.price}</h6>
-                    <img src={img5} alt="" />
-                  </div>
-                  {/* <p className="lsttxt">Free delivery Shubharambh99</p> */}
-                </div>
-                    ))
-                }
-
+                ))}
               </div>
             </div>
           </div>

@@ -3,14 +3,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MyContext } from ".././MyContext";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 import Baseurl from "../../../Baseurl";
 
 const NavbarCategory2 = () => {
   const { show, setShow } = useContext(MyContext);
   const navigate = useNavigate();
-  const [data,setData] = useState([]);
-
+  const [data, setData] = useState([]);
 
   // const data = [
   //   {
@@ -54,11 +53,10 @@ const NavbarCategory2 = () => {
   //     link: "/grocery",
   //   },
   // ];
-  
 
   //category data
-  const allCategary = async() => {
-    console.log("ls",(localStorage.getItem("boon")))
+  const allCategary = async () => {
+    console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/admin/allCategory`;
     try {
       const res = await axios.get(url, {
@@ -66,28 +64,28 @@ const NavbarCategory2 = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("product from categary",res.data.categories);
+      console.log("product from categary", res.data.categories);
       setData(res.data.categories);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     allCategary();
-  },[])
+  }, []);
 
   return (
     <>
-      <div className="hometop2cont mt-4 mb-4" >
-        {data.map((i, index) => (
+      <div className="hometop2cont mt-4 mb-4">
+        {data?.slice(0, 9)?.map((i, index) => (
           <div
             className="hometopitm"
             // onClick={() => {
             //   navigate(i.link ? i.link : "");
             // }} `/categoryproducts/${item._id}
             // onClick={()=>navigate(`/complete/subcategorywise/product/${i._id}`)}
-            onClick={()=>navigate(`/categoryproducts/${i._id}`)}
+            onClick={() => navigate(`/categoryproducts/${i._id}`)}
             key={index}
           >
             <p style={{ fontWeight: "600", fontSize: "18px" }}>

@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BiSearch, BiSupport, BiTrendingUp } from "react-icons/bi";
 import { RiAccountPinCircleFill } from "react-icons/ri";
 import { FiShoppingBag } from "react-icons/fi";
@@ -15,11 +15,11 @@ import {
   AiOutlineDownload,
   AiOutlineCloseCircle,
 } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Baseurl from "../../../Baseurl";
 import axios from "axios";
 import { toast } from "react-toastify";
-import './Navbar.css'
+import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -28,39 +28,39 @@ const Navbar = () => {
   const otpRef = useRef();
   const [cart, setCart] = useState(false);
   const [category, setCategory] = useState([]);
-  const [filterData,setFilterData]=useState([]);
-  const [subCat,setSubCat]=useState([]);
+  const [filterData, setFilterData] = useState([]);
+  const [subCat, setSubCat] = useState([]);
   const [show, setShow] = useState(false);
   const [otpSend, setOtpSend] = useState(false);
   const [regShow, setRegShow] = useState(false);
   const [searchedText, setSearchedText] = useState(false);
   const [mobileNumber, setMobileNumber] = useState(0);
-  const [ show1 , setShow1 ] = useState(false);
-  const [ show2 , setShow2 ] = useState(false);
+  const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
 
   //customer Id
-  const [customerId,setCustomerId]=useState();
+  const [customerId, setCustomerId] = useState();
 
   const otpVerify = async (otp) => {
     // const number = signupRef.current.value;
     const data = {
       mobileNumber: mobileNumber,
       otp: otp,
-    }
+    };
 
     let url = `${Baseurl()}api/v1/verify/otp`;
-    console.log("url", url)
+    console.log("url", url);
     try {
       const res = await axios.post(url, data);
       console.log("otp", res);
       localStorage.setItem("boon", res.data.token);
       toast.success("SingUp ! Success");
-      
+
       localStorage.setItem("userNumber", JSON.stringify(mobileNumber));
       // navigate("/user/login");
       setRegShow(false);
       setOtpSend(false);
-      setMobileNumber("")
+      setMobileNumber("");
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -68,32 +68,30 @@ const Navbar = () => {
     }
   };
 
-
   const handleOtpSubmit = (e) => {
     e.preventDefault();
     const otp = otpRef.current.value;
     // const num = numberRef.current.value;
-    console.log("otp value", otp)
+    console.log("otp value", otp);
     // console.log("numer in otp sub", mobileNumber);
     // console.log("number value", num)
-    otpVerify(otp)
-  }
+    otpVerify(otp);
+  };
 
   // const searchHandler = async(e) => {
   //   e.preventDefault();
   //   navigate("/search");
   // }
 
-
-// login user api
+  // login user api
   const login = async (data) => {
     const mobile = {
       mobileNumber: data,
-    }
-    console.log("mobile", mobile)
+    };
+    console.log("mobile", mobile);
     let url = `${Baseurl()}api/v1/login`;
     try {
-     const res = await axios.post(url, mobile);
+      const res = await axios.post(url, mobile);
       console.log(res, "sign");
       // localStorage.setItem("boon", res.data.token);
       // const myJSON = JSON.stringify(res.data.user);
@@ -114,7 +112,6 @@ const Navbar = () => {
 
   // signup user api
   const signUp = async (data) => {
-
     const mobile = {
       mobileNumber: data,
     };
@@ -125,7 +122,7 @@ const Navbar = () => {
     try {
       const res = await axios.post(url, mobile);
       console.log("signup", res);
-      
+
       // localStorage.setItem("boon", res.data.token);
       // navigate("/user/otp");
       setMobileNumber(data);
@@ -140,14 +137,14 @@ const Navbar = () => {
     }
   };
 
- const loginHandler = () => {
-  const number = loginRef.current.value;
+  const loginHandler = () => {
+    const number = loginRef.current.value;
     login(number);
- }
- const signupHandler = () => {
-  const number = signupRef.current.value;
-  signUp(number);
- }
+  };
+  const signupHandler = () => {
+    const number = signupRef.current.value;
+    signUp(number);
+  };
 
   const handleLogin = () => {
     console.log("clicked");
@@ -191,11 +188,11 @@ const Navbar = () => {
   }, []);
 
   //apply filter
-  const filterHandler=(value)=>{
-      const res=subCat.filter(f=>f?.name?.toLowerCase()?.includes(value));
-      setFilterData(res);
-      console.log("filter data",filterData);
-  }
+  const filterHandler = (value) => {
+    const res = subCat.filter((f) => f?.name?.toLowerCase()?.includes(value));
+    setFilterData(res);
+    console.log("filter data", filterData);
+  };
 
   const handleSignUp = () => {
     setShow(false);
@@ -205,7 +202,6 @@ const Navbar = () => {
   const handleSignUpClose = () => {
     setRegShow(false);
   };
-
 
   const loginOtpVerify = async (otp) => {
     const data = {
@@ -227,7 +223,7 @@ const Navbar = () => {
       // navigate("/user/login");
       setShow(false);
       setOtpSend(false);
-      setMobileNumber("")
+      setMobileNumber("");
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -248,70 +244,89 @@ const Navbar = () => {
   const Login = () => {
     return (
       <>
-      {otpSend ? (<div className="logincont">
-          <div className="logincont2">
-            <div className="logincont2l">
-              <h1>Login</h1>
-              <p>Verify Otp</p>
-            </div>
-            <div className="logincont2r">
-              <div className="X">
-                <i class="fa-solid fa-x" onClick={handleClose}></i>
+        {otpSend ? (
+          <div className="logincont">
+            <div className="logincont2">
+              <div className="logincont2l">
+                <h1>Login</h1>
+                <p>Verify Otp</p>
               </div>
+              <div className="logincont2r">
+                <div className="X">
+                  <i class="fa-solid fa-x" onClick={handleClose}></i>
+                </div>
 
-              <div className="loginform">
-                <div className="wrapper">
-                  <div class="user-input-wrp">
-                    <br />
-                    <input type="text" class="inputText" required ref={otpRef}/>
-                    <span class="floating-label">Enter OTP</span>
+                <div className="loginform">
+                  <div className="wrapper">
+                    <div class="user-input-wrp">
+                      <br />
+                      <input
+                        type="text"
+                        class="inputText"
+                        required
+                        ref={otpRef}
+                      />
+                      <span class="floating-label">Enter OTP</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <p className="inputbelowtxt">
-                By continuing, you agree to Flipkart's <span>Terms Of Use</span>{" "}
-                and
-                <span>Privacy Policy.</span>
-              </p>
-              <button className="loginbtn" onClick={handleLoginOtpSubmit}>Verify OTP</button>
-              {/* <div className="belowtext">
+                <p className="inputbelowtxt">
+                  By continuing, you agree to Flipkart's{" "}
+                  <span>Terms Of Use</span> and
+                  <span>Privacy Policy.</span>
+                </p>
+                <button className="loginbtn" onClick={handleLoginOtpSubmit}>
+                  Verify OTP
+                </button>
+                {/* <div className="belowtext">
                 <p onClick={handleSignUp}>New To Flipkart? Create Account</p>
               </div> */}
+              </div>
             </div>
           </div>
-        </div>) : (<div className="logincont">
-          <div className="logincont2">
-            <div className="logincont2l">
-              <h1>Login</h1>
-              <p>Get access to your Orders, wishlist, and Recommendations</p>
-            </div>
-            <div className="logincont2r">
-              <div className="X">
-                <i class="fa-solid fa-x" onClick={handleClose}></i>
+        ) : (
+          <div className="logincont">
+            <div className="logincont2">
+              <div className="logincont2l">
+                <h1>Login</h1>
+                <p>Get access to your Orders, wishlist, and Recommendations</p>
               </div>
+              <div className="logincont2r">
+                <div className="X">
+                  <i class="fa-solid fa-x" onClick={handleClose}></i>
+                </div>
 
-              <div className="loginform">
-                <div className="wrapper">
-                  <div class="user-input-wrp">
-                    <br />
-                    <input type="text" class="inputText" required ref={loginRef}/>
-                    <span class="floating-label">Enter Email / Mobile Number</span>
+                <div className="loginform">
+                  <div className="wrapper">
+                    <div class="user-input-wrp">
+                      <br />
+                      <input
+                        type="text"
+                        class="inputText"
+                        required
+                        ref={loginRef}
+                      />
+                      <span class="floating-label">
+                        Enter Email / Mobile Number
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <p className="inputbelowtxt">
-                By continuing, you agree to Flipkart's <span>Terms Of Use</span>{" "}
-                and
-                <span>Privacy Policy.</span>
-              </p>
-              <button className="loginbtn" onClick={loginHandler}>Request OTP</button>
-              <div className="belowtext">
-                <p onClick={handleSignUp}>New To Flipkart? Create Account</p>
+                <p className="inputbelowtxt">
+                  By continuing, you agree to Flipkart's{" "}
+                  <span>Terms Of Use</span> and
+                  <span>Privacy Policy.</span>
+                </p>
+                <button className="loginbtn" onClick={loginHandler}>
+                  Request OTP
+                </button>
+                <div className="belowtext">
+                  <p onClick={handleSignUp}>New To Flipkart? Create Account</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>)}
-        
+        )}
       </>
     );
   };
@@ -319,79 +334,90 @@ const Navbar = () => {
   const SignUp = () => {
     return (
       <>
-      {otpSend ? (<div className="logincont">
-          <div className="logincont2">
-            <div className="logincont2l">
-              <h1>Enter OTP</h1>
-              {/* <p>SignUp with your mobile Number to get started</p> */}
-            </div>
-            <div className="logincont2r">
-              <div className="X">
-                <i class="fa-solid fa-x" onClick={handleSignUpClose}></i>
+        {otpSend ? (
+          <div className="logincont">
+            <div className="logincont2">
+              <div className="logincont2l">
+                <h1>Enter OTP</h1>
+                {/* <p>SignUp with your mobile Number to get started</p> */}
               </div>
+              <div className="logincont2r">
+                <div className="X">
+                  <i class="fa-solid fa-x" onClick={handleSignUpClose}></i>
+                </div>
 
-              <div className="loginform">
-                <div className="wrapper">
-                  <div className="input-data">
-                    <input type="text" ref={otpRef} placeholder="Enter Otp"/>
-                    {/* <label>Enter Mobile Number</label> */}
+                <div className="loginform">
+                  <div className="wrapper">
+                    <div className="input-data">
+                      <input type="text" ref={otpRef} placeholder="Enter Otp" />
+                      {/* <label>Enter Mobile Number</label> */}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <p className="inputbelowtxt">
-                By continuing, you agree to Flipkart's <span>Terms Of Use</span>{" "}
-                and
-                <span>Privacy Policy.</span>
-              </p>
-              <button className="loginbtn" onClick={handleOtpSubmit}>Continue</button>
-              {/* <button className="signupbtn" onClick={handleLogin}>
+                <p className="inputbelowtxt">
+                  By continuing, you agree to Flipkart's{" "}
+                  <span>Terms Of Use</span> and
+                  <span>Privacy Policy.</span>
+                </p>
+                <button className="loginbtn" onClick={handleOtpSubmit}>
+                  Continue
+                </button>
+                {/* <button className="signupbtn" onClick={handleLogin}>
                 Existing User? Log in
               </button>
               <div className="belowtext">
                 <p>New To Flipkart? Create Account</p>
               </div> */}
+              </div>
             </div>
           </div>
-        </div>) : (<div className="logincont">
-          <div className="logincont2">
-            <div className="logincont2l">
-              <h1>Looks Like You are New Here</h1>
-              <p>SignUp with your mobile Number to get started</p>
-            </div>
-            <div className="logincont2r">
-              <div className="X">
-                <i class="fa-solid fa-x" onClick={handleSignUpClose}></i>
+        ) : (
+          <div className="logincont">
+            <div className="logincont2">
+              <div className="logincont2l">
+                <h1>Looks Like You are New Here</h1>
+                <p>SignUp with your mobile Number to get started</p>
               </div>
+              <div className="logincont2r">
+                <div className="X">
+                  <i class="fa-solid fa-x" onClick={handleSignUpClose}></i>
+                </div>
 
-              <div className="loginform">
-                <div className="wrapper">
-                  <div className="input-data">
-                    <input type="text" ref={signupRef} placeholder="Enter Mobile Number"/>
-                    {/* <label>Enter Mobile Number</label> */}
+                <div className="loginform">
+                  <div className="wrapper">
+                    <div className="input-data">
+                      <input
+                        type="text"
+                        ref={signupRef}
+                        placeholder="Enter Mobile Number"
+                      />
+                      {/* <label>Enter Mobile Number</label> */}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <p className="inputbelowtxt">
-                By continuing, you agree to Flipkart's <span>Terms Of Use</span>{" "}
-                and
-                <span>Privacy Policy.</span>
-              </p>
-              <button className="loginbtn" onClick={signupHandler}>Continue</button>
-              <button className="signupbtn" onClick={handleLogin}>
-                Existing User? Log in
-              </button>
-              <div className="belowtext">
-                <p>New To Flipkart? Create Account</p>
+                <p className="inputbelowtxt">
+                  By continuing, you agree to Flipkart's{" "}
+                  <span>Terms Of Use</span> and
+                  <span>Privacy Policy.</span>
+                </p>
+                <button className="loginbtn" onClick={signupHandler}>
+                  Continue
+                </button>
+                <button className="signupbtn" onClick={handleLogin}>
+                  Existing User? Log in
+                </button>
+                <div className="belowtext">
+                  <p>New To Flipkart? Create Account</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>)}
-        
+        )}
       </>
     );
   };
 
-  console.log(filterData)
+  console.log(filterData);
   return (
     <>
       <div
@@ -414,7 +440,7 @@ const Navbar = () => {
               alt=""
             />
           </div>
-      
+
           <div
             class="md:flex  hidden justify-center relative  top-0 "
             style={{ top: "-10px" }}
@@ -430,7 +456,8 @@ const Navbar = () => {
                 //tab index
               >
                 {/* search all category */}
-                <div className="parent1"
+                <div
+                  className="parent1"
                   style={{
                     backgroundColor: "#354892",
                     width: "40%",
@@ -443,11 +470,12 @@ const Navbar = () => {
                     paddingLeft: "20px",
                     paddingTop: "2px",
                     paddingBottom: "2px",
-                    display:"none"
+                    display: "none",
                   }}
-                  onMouseEnter={() => setShow2(true)} onMouseLeave={() => setShow2(false)}
+                  onMouseEnter={() => setShow2(true)}
+                  onMouseLeave={() => setShow2(false)}
                 >
-                  <p style={{ color: "#fff", marginLeft: "4%"}} >
+                  <p style={{ color: "#fff", marginLeft: "4%" }}>
                     All Category
                   </p>
                   <i
@@ -459,16 +487,33 @@ const Navbar = () => {
                     class="fa-sharp fa-solid fa-caret-down"
                   ></i>
 
-                  <div  class={show2 ===true ? "" : "d-none"} className="child1" onMouseEnter={() => setShow2(true)} onMouseLeave={() => setShow2(false)}>
-                  {category.length > 0 && category.map((category,i) => {
-                    return <>
-                    <div key={i} onClick={()=>navigate(`/complete/categorywise/product/${category._id}`)}>{category.name}</div>
-                    {/* <button key={i} onClick={()=>navigate(`complete/categorywise/product/${category._id}`)}>{category.name}</button> */}
-                    </>
-                  })}
-                  </div>  
+                  <div
+                    class={show2 === true ? "" : "d-none"}
+                    className="child1"
+                    onMouseEnter={() => setShow2(true)}
+                    onMouseLeave={() => setShow2(false)}
+                  >
+                    {category.length > 0 &&
+                      category.map((category, i) => {
+                        return (
+                          <>
+                            <div
+                              key={i}
+                              onClick={() =>
+                                navigate(
+                                  `/complete/categorywise/product/${category._id}`
+                                )
+                              }
+                            >
+                              {category.name}
+                            </div>
+                            {/* <button key={i} onClick={()=>navigate(`complete/categorywise/product/${category._id}`)}>{category.name}</button> */}
+                          </>
+                        );
+                      })}
+                  </div>
                 </div>
-                
+
                 <button
                   className=" outline-none w-96 bg-white flex rounded-md text-black p-1 parent"
                   type="button"
@@ -476,28 +521,45 @@ const Navbar = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                   style={{ borderRadius: "22px" }}
-                  onMouseEnter={() => setShow1(true)} onMouseLeave={() => setShow1(false)}
+                  onMouseEnter={() => setShow1(true)}
+                  onMouseLeave={() => setShow1(false)}
                 >
                   {console.log(show1)}
                   <input
                     className="outline-none pl-4 pt-1 bg-transparent w-full "
                     placeholder="Search anything"
                     type="text"
-                    
                     // onmouseover={setSearchShow(true)}
-                    onChange={(e)=>filterHandler(e.target.value)}
+                    onChange={(e) => filterHandler(e.target.value)}
                   />
-                  <BiSearch className="text-2xl  cursor-pointer text-black mr-2 mt-1"  />
+                  <BiSearch className="text-2xl  cursor-pointer text-black mr-2 mt-1" />
                   {/* <BiSearch className="text-2xl  cursor-pointer text-black mr-2 mt-1"  onClick={searchHandler}/> */}
                 </button>
 
-                  <div className={show1 ? "child" : "d-none"} onMouseEnter={() => setShow1(true)} onMouseLeave={() => setShow1(false)}  >
-                  {filterData.length > 0 && filterData?.splice(0,6)?.map((subCategory,i) => {
-                    return <>
-                    <div key={i} onClick={()=>navigate(`/complete/subcategorywise/product/${subCategory._id}`)} style={{cursor:"pointer"}}>{subCategory.name}</div>
-                    </>
-                  })}
-                  </div>
+                <div
+                  className={show1 ? "child" : "d-none"}
+                  onMouseEnter={() => setShow1(true)}
+                  onMouseLeave={() => setShow1(false)}
+                >
+                  {filterData.length > 0 &&
+                    filterData?.splice(0, 6)?.map((subCategory, i) => {
+                      return (
+                        <>
+                          <div
+                            key={i}
+                            onClick={() =>
+                              navigate(
+                                `/complete/subcategorywise/product/${subCategory._id}`
+                              )
+                            }
+                            style={{ cursor: "pointer" }}
+                          >
+                            {subCategory.name}
+                          </div>
+                        </>
+                      );
+                    })}
+                </div>
                 {/* <ul
                 class=" w-full
           dropdown-menu
@@ -985,9 +1047,12 @@ const Navbar = () => {
         "
                       aria-labelledby="dropdownMenuButton1"
                     >
-                      <li className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100"  onClick={() => {
-                navigate("/profile");
-              }}>
+                      <li
+                        className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100"
+                        onClick={() => {
+                          navigate("/profile");
+                        }}
+                      >
                         <FaUserCircle className="text-2xl" />
                         <a
                           class="
@@ -1003,12 +1068,14 @@ const Navbar = () => {
               text-gray-700
               hover:bg-gray-100
             "
-                          
                         >
                           My Profile
                         </a>
                       </li>
-                      <li onClick={() => navigate(`/orders/${customerId}`)} className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100">
+                      <li
+                        onClick={() => navigate(`/orders/${customerId}`)}
+                        className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100"
+                      >
                         <FiShoppingBag className="text-2xl" />
                         <a
                           class="
@@ -1029,7 +1096,10 @@ const Navbar = () => {
                           My Orders
                         </a>
                       </li>
-                      <li onClick={() => navigate("/wishlist")} className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100">
+                      <li
+                        onClick={() => navigate("/wishlist")}
+                        className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100"
+                      >
                         <FaRegHeart className="text-2xl" />
                         <a
                           class="
@@ -1073,7 +1143,7 @@ const Navbar = () => {
                       </li>
                       <li className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100">
                         <BsGift className="text-2xl" />
-                        <a
+                        <Link
                           class="
             dropdown-item
             text-base
@@ -1087,14 +1157,14 @@ const Navbar = () => {
             text-gray-700
             hover:bg-gray-100
           "
-                          href="#"
+                          to="/couponpage"
                         >
                           Coupon
-                        </a>
+                        </Link>
                       </li>
                       <li className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100">
                         <IoMdNotifications className="text-2xl" />
-                        <a
+                        <Link
                           class="
             dropdown-item
             text-base
@@ -1108,10 +1178,10 @@ const Navbar = () => {
             text-gray-700
             hover:bg-gray-100
           "
-                          href="#"
+                          to="/notification-page"
                         >
                           Notification
-                        </a>
+                        </Link>
                       </li>
                       <li className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100">
                         <AiOutlineLogout className="text-2xl" />
@@ -1134,7 +1204,7 @@ const Navbar = () => {
                             localStorage.removeItem("boon");
                             localStorage.removeItem("userDataBoon");
                             localStorage.removeItem("userNumber");
-                      localStorage.removeItem("userWishlist");
+                            localStorage.removeItem("userWishlist");
                             navigate("/");
                           }}
                         >
@@ -1160,14 +1230,12 @@ const Navbar = () => {
               }}
               className="text-l hidden md:flex font-medium"
             >
-              Cart 
+              Cart
             </h2>
             <CgMenuRightAlt className=" text-3xl hidden" />
-            
           </div>
         </div>
       </div>
-
     </>
   );
 };

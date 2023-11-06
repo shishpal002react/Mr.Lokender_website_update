@@ -1,6 +1,6 @@
 import React from "react";
 import Homepage from "./MyComponents/Homepage/Homepage";
-import { Routes, Route  } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import BecomeSeller from "./MyComponents/BecomeASeller/BecomeSeller";
 import RegisterSeller from "./MyComponents/BecomeASeller/RegisterSeller";
 import ProductViewAll from "./MyComponents/Homepage/ProductSection/ProductViewAll";
@@ -42,7 +42,8 @@ import AllOfferCompletePage from "./MyComponents/SpecialOffer/AllOfferCompletePa
 import CompletePopularProduct from "./MyComponents/PopularProduct/CompletePopularProduct";
 import PaymentSuccess from "./MyComponents/PaymentPage/PaymentSuccess";
 // import OtpVerify from "./MyComponents/User/otpVerify";
-
+import Coupon from "./MyComponents/Coupon/Coupon";
+import Notification from "./MyComponents/Notification/Notification";
 
 const App = () => {
   return (
@@ -60,23 +61,34 @@ const App = () => {
         <Route path="/all-product" element={<ProductViewAll />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/rent-product-view" element={<RentalSingleView />} />
-        <Route path="/cart" element={<Cart/>} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/orders/:id" element={<Orders />} />
         <Route path="/all-category" element={<MobileCategory />} />
         <Route path="/my-profile" element={<Profile />} />
         <Route path="/grocery" element={<Grocery />} />
-        <Route path="/categoryproducts/:id" element={<CategoryProducts/>}/>
+        <Route path="/categoryproducts/:id" element={<CategoryProducts />} />
         {/* // id is pass */}
-        <Route path="/singleprodoctview/:id" element={<SingleProductView/>}/>
+        <Route path="/singleprodoctview/:id" element={<SingleProductView />} />
         {/* //subcategory wise searsubcategory */}
-        <Route path="/complete/subcategorywise/product/:id" element={<CompleteSubCategorypage/>}/>
-        <Route path="/complete/categorywise/product/:id" element={<CompleteCategorypage/>}/>
-        <Route path="/complete/offerscrren" element={<AllOfferCompletePage/>}/>
-        <Route path="/popular/product" element={<CompletePopularProduct/>}/>
+        <Route
+          path="/complete/subcategorywise/product/:id"
+          element={<CompleteSubCategorypage />}
+        />
+        <Route
+          path="/complete/categorywise/product/:id"
+          element={<CompleteCategorypage />}
+        />
+        <Route
+          path="/complete/offerscrren"
+          element={<AllOfferCompletePage />}
+        />
+        <Route path="/popular/product" element={<CompletePopularProduct />} />
         {/* payment status page */}
-        <Route path="/successpge/:id" element={<PaymentSuccess/>}/>
+        <Route path="/successpge/:id" element={<PaymentSuccess />} />
         {/* pupular product screen */}
-        <Route path="/product-view/:id" element={<ProductSingleView />} /> 
+        <Route path="/couponpage" element={<Coupon />} />
+        <Route path="/notification-page" element={<Notification />} />
+        <Route path="/product-view/:id" element={<ProductSingleView />} />
         <Route path="/category/:name" element={<Common />} />
         <Route path="/fashion" element={<Fashion />} />
         <Route path="/mobile" element={<Mobile />} />
@@ -98,7 +110,5 @@ const App = () => {
     </>
   );
 };
-
-
 
 export default App;

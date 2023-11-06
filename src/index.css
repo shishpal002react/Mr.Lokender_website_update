@@ -182,7 +182,6 @@ body::-webkit-scrollbar-thumb {
   align-items: right;
 }
 
-
 /* Style the dropdown button */
 .dropdown {
   position: relative;
@@ -1174,9 +1173,9 @@ body::-webkit-scrollbar-thumb {
 }
 .three-sec .left {
   display: flex;
-    width: 70%;
-    justify-content: space-evenly;
-    gap: 32px;
+  width: 70%;
+  justify-content: space-evenly;
+  gap: 32px;
 }
 
 .three-sec .left img {
@@ -1237,14 +1236,31 @@ body::-webkit-scrollbar-thumb {
   gap: 20px;
 }
 .three-sec .right .down .thorught {
-text-decoration: line-through;
-color: #878787;
+  text-decoration: line-through;
+  color: #878787;
 }
 .three-sec .right .down .thorught1 {
   font-weight: 600;
   font-size: 20px;
-color: #075522 !important;
+  color: #075522 !important;
 }
-.three-sec .right p{
+.three-sec .right p {
   font-size: 18px;
+}
+
+/* coupon page */
+
+.Coupon-design {
+  margin-top: 3%;
+  width: 70%;
+  margin-bottom: 3%;
+}
+
+.Coupon-under {
+  margin-left: 5%;
+}
+
+.coupon-gap {
+  padding-left: 20px;
+  padding-bottom: 20px;
 }

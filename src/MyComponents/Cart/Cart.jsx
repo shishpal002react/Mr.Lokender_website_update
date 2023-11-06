@@ -35,6 +35,7 @@ const Cart = () => {
       // setCartPro(res.data.data.products);
       // console.log("cart produts",res.data);
       setCartProducts(res.data.products);
+      console.log("cart data is printed ", res.data.products);
       setCartDetails(res.data);
     } catch (error) {
       console.log(error);
