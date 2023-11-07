@@ -34,6 +34,7 @@ const ProductSection = () => {
   // const [subCat, setSubCat] = useState([]);
   // shoes category id pass manually
 
+  //please check why are use static id
   let id = "6527bda093ce9e25be1d7303";
 
   const addToWishlistHandler = (product) => {
@@ -71,6 +72,12 @@ const ProductSection = () => {
   useEffect(() => {
     getProducts();
   }, []);
+
+  //user address
+  //user data
+  const userData = JSON.parse(localStorage.getItem("userDataBoon"));
+
+  console.log("userdata ", userData);
 
   // add to cart
   const addToCartHandler = async (id) => {

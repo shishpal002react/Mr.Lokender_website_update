@@ -6,7 +6,7 @@ import Footer from "../Homepage/Footer/Footer";
 import Baseurl from "../../Baseurl";
 import axios from "axios";
 
-export default function PaymentSuccess() {
+export default function PaymentSuccessfulPage() {
   //apply condition if success delete all card detail else not
   // const getDeleteData=async()=>{
   //   const url=`${Baseurl()}api/v1/cart/remove/cart/all`

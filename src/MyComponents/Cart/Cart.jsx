@@ -64,6 +64,12 @@ const Cart = () => {
       console.log(error);
     }
   };
+
+  //user data
+  const userData = JSON.parse(localStorage.getItem("userDataBoon"));
+
+  console.log("userdata ", userData);
+
   const createOrderHandler = async (cartDetails) => {
     console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/orders`;
@@ -84,19 +90,20 @@ const Cart = () => {
       const options = {
         key: "rzp_test_JLYSrkvFXSpSQv",
         amount: cartDetails.totalAmount * 100,
+        // amount: 20 * 100,
         currency: "INR",
         name: cartDetails.title,
         description: "Tutorial of RazorPay",
         image: cartDetails?.productimage?.[0],
         // order_id: cartDetails._id,
-        handler: function (response) {
-          // Send a request to your server for payment verification
-          fetch(`http://localhost:3000/successpage/${cartDetails._id}`, {
-            method: "POST",
-          });
-        },
+        // handler: function (response) {
+        // Send a request to your server for payment verification
+        //   fetch(`http://localhost:3000/successpage/${cartDetails._id}`, {
+        //     method: "POST",
+        //   });
+        // },
 
-        // callback_url: `http://localhost:3000/successpage/${cartDetails._id}`,
+        callback_url: `https://mr-lokender-website-updated-07-11-2023.vercel.app/payment/successfullpage/455`,
         prefill: {
           name: "Gaurav Kumar",
           email: "gaurav.kumar@example.com",

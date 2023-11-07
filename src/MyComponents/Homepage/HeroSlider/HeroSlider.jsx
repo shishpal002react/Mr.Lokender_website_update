@@ -40,7 +40,7 @@ const HeroSlider = () => {
             data.map((item) => (
               <div class="carousel-item active relative float-left w-full">
                 <img
-                  src={item.image}
+                  src={item?.image}
                   class="block w-full"
                   alt="Wild Landscape"
                   className="slidimg"
