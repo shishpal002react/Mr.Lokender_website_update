@@ -6,6 +6,7 @@ import {
   FaTwitter,
   FaArrowUp,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import logo from "../../../Images/d52.png";
 import img from "../../../Images/d54.png";
 import img2 from "../../../Images/d56.png";
@@ -14,6 +15,9 @@ import img4 from "../../../Images/d73.png";
 import img5 from "../../../Images/d74.png";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const userData = JSON.parse(localStorage.getItem("userDataBoon"));
+  const id = userData._id;
   return (
     <>
       <hr className="w-full text-white" />
@@ -355,14 +359,19 @@ const Footer = () => {
           Terms and conditions apply.
         </p>
       </p>
-      <div className="container-fluid flex gap-15 ml-1 mt-1 bg-white p-1 text-black mx-auto footcont">
-        <div className="w-2/5 space-x-4  space-y-6 footitm">
+      <div className="container-fluid flex gap-15 ml-1 mt-1 dark:bg-slate-800 p-1 text-black mx-auto footcont backGround-color width-footer">
+        <div className="w-2/5 space-x-4  space-y-6 footitm ">
           <h3
-            style={{ fontWeight: "700", fontSize: "24px", marginLeft: "16px" }}
+            style={{
+              fontWeight: "700",
+              fontSize: "24px",
+              marginLeft: "16px",
+              color: "gray",
+            }}
           >
             About
           </h3>
-          <p>
+          <p style={{ color: "white" }}>
             Lorem ipsum dolor, sit amet <br />
             consectetur adipisicing elit. Provident, odio. efrgbrefg
             tgrbhsrtgtrgtr fgbt5grtgrsfgrefd tgrfdc erfrefggrtrg trgfdgrtfgbtr
@@ -371,11 +380,13 @@ const Footer = () => {
           <div className="flex space-x-4 text-2xl">
             <FaFacebook style={{ color: "blue" }} />
             <FaInstagram style={{ color: "green" }} />
-            <FaLinkedin />
+            <FaLinkedin style={{ color: "green" }} />
           </div>
         </div>
         <div className=" md:flex flex-col  w-1/5  space-y-6 footitm">
-          <h2 className="text-xl font-medium">Useful Links</h2>
+          <h2 className="text-xl font-medium " style={{ color: "gray" }}>
+            Useful Links
+          </h2>
           <ul className="space-y-2">
             <li>About</li>
             <li>FAQ</li>
@@ -388,19 +399,35 @@ const Footer = () => {
           </ul>
         </div>
         <div className=" md:flex flex-col  w-1/5 space-y-6 footitm">
-          <h2 className="text-xl font-medium">Account</h2>
+          <h2 className="text-xl font-medium" style={{ color: "gray" }}>
+            Account
+          </h2>
           <ul className="space-y-2">
-            <li>My Account </li>
+            <li
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
+              My Account{" "}
+            </li>
             <li> My Wallet</li>
-            <li>Wishlist</li>
-            <li>Orders</li>
+            <li onClick={() => navigate("/wishlist")}>Wishlist</li>
+            <li onClick={() => navigate(`/orders/${id}`)}>Orders</li>
             <li>Track Orders</li>
             <li>Trucks & Exchange</li>
-            <li>Become A Seller</li>
+            <li
+              onClick={() => {
+                navigate("/seller-registration");
+              }}
+            >
+              Become A Seller
+            </li>
           </ul>
         </div>
         <div className=" md:flex flex-col  w-1/5 space-y-6 footitm">
-          <h2 className="text-xl font-medium">Shopping</h2>
+          <h2 className="text-xl font-medium" style={{ color: "gray" }}>
+            Shopping
+          </h2>
           <ul className="space-y-2">
             <li>Men</li>
             <li>Women</li>
@@ -410,7 +437,9 @@ const Footer = () => {
           </ul>
         </div>
         <div className=" md:flex flex-col  w-1/5 space-y-6 footitm">
-          <h2 className="text-xl font-medium">Download Our App</h2>
+          <h2 className="text-xl font-medium" style={{ color: "gray" }}>
+            Download Our App
+          </h2>
           <ul className="space-y-2">
             <button
               style={{

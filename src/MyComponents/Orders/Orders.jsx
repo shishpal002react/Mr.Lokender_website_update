@@ -1,21 +1,25 @@
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
-import Navbar from '../Homepage/Navbar/Navbar';
-import NavbarCategory2 from '../Homepage/NavbarCategory/NavbarCategory2';
-import Footer from '../Homepage/Footer/Footer';
-import Baseurl from '../../Baseurl';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import Navbar from "../Homepage/Navbar/Navbar";
+import NavbarCategory2 from "../Homepage/NavbarCategory/NavbarCategory2";
+import Footer from "../Homepage/Footer/Footer";
+import Baseurl from "../../Baseurl";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const Orders = () => {
-const [orders ,setOrders] = useState({});
-   const {id}=useParams();
+  const [orders, setOrders] = useState({});
+  const { id } = useParams();
+
+  const userData = JSON.parse(localStorage.getItem("userDataBoon"));
+
+  console.log("userdata information", userData);
+
   const getOrders = async () => {
-
-
-      console.log("ls",(localStorage.getItem("boon")))
-    let url = `${Baseurl()}api/v1/orders/${id}`;
+    console.log("ls", localStorage.getItem("boon"));
+    // let url = `${Baseurl()}api/v1/orders/${userData?._id}`;
+    let url=`${Baseurl()}api/v1/orders`
     try {
       const res = await axios.get(url, {
         headers: {
@@ -23,10 +27,10 @@ const [orders ,setOrders] = useState({});
         },
       });
       // setCartPro(res.data.data.products);
-      console.log("order",res);
+      console.log("order data after api calling", res);
       setOrders(res.data);
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -34,7 +38,7 @@ const [orders ,setOrders] = useState({});
   }, []);
   return (
     <>
-    {console.log("inside return", orders)}
+      {console.log("inside return", orders)}
       <Navbar />
       <NavbarCategory2 />
       <div className="cartcont">
@@ -43,43 +47,39 @@ const [orders ,setOrders] = useState({});
             <div className="cartconttopl">
               <h3>My Orders</h3>
             </div>
-            
           </div>
-          {Object.keys(orders).length !== 0 ? 
-             <div className="cartcont2">
-            <div className="cartcont2l">
-              {orders.products.map((item, i) => {
-                return <div className="cartprod">
-                <div className="cartprodr">
-                  {/* <h6>Product Price: {item.price}</h6> */}
-                  <p>Quantity: {item.quantity}</p>
-                  {/* <p>Seller: {product.sellerId}</p> */}
-  
-                  <p> &#x20b9; {item.price}</p>
-                  <hr style={{color:"black"}}></hr>
+          {Object.keys(orders).length !== 0 ? (
+            <div className="cartcont2">
+              <div className="cartcont2l">
+                {orders.products.map((item, i) => {
+                  return (
+                    <div className="cartprod">
+                      <div className="cartprodr">
+                        {/* <h6>Product Price: {item.price}</h6> */}
+                        <p>Quantity: {item.quantity}</p>
+                        {/* <p>Seller: {product.sellerId}</p> */}
+
+                        <p> &#x20b9; {item.price}</p>
+                        <hr style={{ color: "black" }}></hr>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="cartcont2r">
+                <h6>Total Amount : &#x20b9; {orders.totalAmount}</h6>
+                <p>Product Status: {orders.status}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="cartcont2">
+              <div className="cartcont2l">
+                <div className="cartprod">
+                  <div className="cartprodl">No Order found!</div>
                 </div>
               </div>
-              })}
-              
             </div>
-            <div className="cartcont2r">
-              <h6>Total Amount : &#x20b9; {orders.totalAmount}</h6>
-              <p>Product Status: {orders.status}</p>
-            </div>
-          </div>
-          : <div className="cartcont2">
-          <div className="cartcont2l">
-            <div className="cartprod">
-              <div className="cartprodl">
-                No Order found!
-              </div>
-             
-            </div>
-          </div>
-        </div>
-        }
-
-          
+          )}
 
           {/* <div className="cartcont2">
             <div className="cartcont2l">
@@ -101,8 +101,6 @@ const [orders ,setOrders] = useState({});
             </div>
           </div> */}
         </div>
-
-
 
         {/* {orderDetails.length > 0 && cartDetails.map((product, i) => {
           return <div className="cartcontr">
@@ -129,8 +127,6 @@ const [orders ,setOrders] = useState({});
           <p style={{color:"#1C9D31"}}>You will save &#x20b9; 300 on this order </p>
         </div>
         })} */}
-
-
 
         {/* <div className="cartcontr">
           <h5>Price Details</h5>
@@ -272,6 +268,6 @@ const [orders ,setOrders] = useState({});
       <Footer />
     </>
   );
-}
+};
 
-export default Orders
+export default Orders;

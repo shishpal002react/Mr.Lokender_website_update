@@ -5,34 +5,35 @@ import NavbarCategory2 from "../Homepage/NavbarCategory/NavbarCategory2";
 import Footer from "../Homepage/Footer/Footer";
 import Baseurl from "../../Baseurl";
 import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function PaymentSuccessfulPage() {
-  //apply condition if success delete all card detail else not
-  // const getDeleteData=async()=>{
-  //   const url=`${Baseurl()}api/v1/cart/remove/cart/all`
-  //       try {
-  //           const res=await axios.delete(url,{
-  //               headers: {
-  //                 Authorization: `Bearer ${localStorage.getItem("boon")}`,
-  //               },
-  //             })
-  //       } catch (error) {
-  //           console.log(error);
-  //       }
-  // }
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  // useEffect(()=>{
-  //   getDeleteData();
-  // },[])
+  const postHandler = async () => {
+    try {
+      const res = await axios.put(
+        `https://lokender-backend-api.vercel.app/api/v1/update/status/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("boon")}`,
+          },
+        }
+      );
+      // alert("Success");
+      navigate("/");
+    } catch {}
+  };
+
+  useEffect(() => {
+    postHandler();
+  }, [id]);
 
   return (
     <>
       <Navbar />
-      {/* <NavbarCategory2 />
-
-      <p>payment is successfull</p>
-
-      <Footer /> */}
     </>
   );
 }
