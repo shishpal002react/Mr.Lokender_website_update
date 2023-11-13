@@ -9,8 +9,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const Orders = () => {
-  const [orders, setOrders] = useState({});
-  const { id } = useParams();
+  const [orders, setOrders] = useState([]);
 
   const userData = JSON.parse(localStorage.getItem("userDataBoon"));
 
@@ -19,7 +18,7 @@ const Orders = () => {
   const getOrders = async () => {
     console.log("ls", localStorage.getItem("boon"));
     // let url = `${Baseurl()}api/v1/orders/${userData?._id}`;
-    let url=`${Baseurl()}api/v1/orders`
+    let url = `${Baseurl()}api/v1/orders`;
     try {
       const res = await axios.get(url, {
         headers: {
@@ -51,15 +50,15 @@ const Orders = () => {
           {Object.keys(orders).length !== 0 ? (
             <div className="cartcont2">
               <div className="cartcont2l">
-                {orders.products.map((item, i) => {
+                {orders?.products?.map((item, i) => {
                   return (
                     <div className="cartprod">
                       <div className="cartprodr">
                         {/* <h6>Product Price: {item.price}</h6> */}
-                        <p>Quantity: {item.quantity}</p>
+                        <p>Quantity: {item?.quantity}</p>
                         {/* <p>Seller: {product.sellerId}</p> */}
 
-                        <p> &#x20b9; {item.price}</p>
+                        <p> &#x20b9; {item?.price}</p>
                         <hr style={{ color: "black" }}></hr>
                       </div>
                     </div>
@@ -67,8 +66,8 @@ const Orders = () => {
                 })}
               </div>
               <div className="cartcont2r">
-                <h6>Total Amount : &#x20b9; {orders.totalAmount}</h6>
-                <p>Product Status: {orders.status}</p>
+                <h6>Total Amount : &#x20b9; {orders?.totalAmount}</h6>
+                <p>Product Status: {orders?.status}</p>
               </div>
             </div>
           ) : (

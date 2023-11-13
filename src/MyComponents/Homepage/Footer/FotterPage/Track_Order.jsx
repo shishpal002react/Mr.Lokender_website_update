@@ -2,11 +2,11 @@ import React from "react";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../Footer";
 
-export default function MyWallet() {
+export default function Track_Order() {
   return (
     <div>
       <Navbar />
-      MyWallet
+      Track_Order
       <Footer />
     </div>
   );

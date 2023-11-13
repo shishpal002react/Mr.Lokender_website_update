@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaFacebook,
   FaInstagram,
@@ -13,11 +13,36 @@ import img2 from "../../../Images/d56.png";
 import img3 from "../../../Images/d72.png";
 import img4 from "../../../Images/d73.png";
 import img5 from "../../../Images/d74.png";
+import axios from "axios";
+import Baseurl from "../../../Baseurl";
 
 const Footer = () => {
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("userDataBoon"));
-  const id = userData._id;
+  // const id = userData._id;
+
+  //category
+  const [categary, setCategory] = useState([]);
+  const allCategary = async () => {
+    console.log("ls", localStorage.getItem("boon"));
+    let url = `${Baseurl()}api/v1/admin/allCategory`;
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("boon")}`,
+        },
+      });
+      console.log("product from categary golu", res.data.categories);
+      setCategory(res.data.categories);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    allCategary();
+  }, []);
+
   return (
     <>
       <hr className="w-full text-white" />
@@ -383,22 +408,28 @@ const Footer = () => {
             <FaLinkedin style={{ color: "green" }} />
           </div>
         </div>
-        <div className=" md:flex flex-col  w-1/5  space-y-6 footitm">
+        <div className=" md:flex flex-col  w-1/5  space-y-6 footitm footer">
           <h2 className="text-xl font-medium " style={{ color: "gray" }}>
             Useful Links
           </h2>
           <ul className="space-y-2">
-            <li>About</li>
-            <li>FAQ</li>
-            <li>Shipping Policy</li>
-            <li>Cancellation Policy</li>
-            <li>Return & Refund Policy</li>
-            <li>Terms & Conditions</li>
-            <li>Privacy Policy</li>
-            <li>Contact Us</li>
+            <li onClick={() => navigate("/about")}>About</li>
+            <li onClick={() => navigate("/faq")}>FAQ</li>
+            <li onClick={() => navigate("/shippingpolicy")}>Shipping Policy</li>
+            <li onClick={() => navigate("/cancellationpolicy")}>
+              Cancellation Policy
+            </li>
+            <li onClick={() => navigate("/return_refund")}>
+              Return & Refund Policy
+            </li>
+            <li onClick={() => navigate("/terms_condition")}>
+              Terms & Conditions
+            </li>
+            <li onClick={() => navigate("/privacypolicy")}>Privacy Policy</li>
+            <li onClick={() => navigate("/contractus")}>Contact Us</li>
           </ul>
         </div>
-        <div className=" md:flex flex-col  w-1/5 space-y-6 footitm">
+        <div className=" md:flex flex-col  w-1/5 space-y-6 footitm footer-bottom">
           <h2 className="text-xl font-medium" style={{ color: "gray" }}>
             Account
           </h2>
@@ -410,11 +441,20 @@ const Footer = () => {
             >
               My Account{" "}
             </li>
-            <li> My Wallet</li>
+            <li
+              onClick={() => {
+                navigate("/mywallet");
+              }}
+            >
+              {" "}
+              My Wallet
+            </li>
             <li onClick={() => navigate("/wishlist")}>Wishlist</li>
-            <li onClick={() => navigate(`/orders/${id}`)}>Orders</li>
-            <li>Track Orders</li>
-            <li>Trucks & Exchange</li>
+            <li onClick={() => navigate(`/orders`)}>Orders</li>
+            <li onClick={() => navigate(`/track_order`)}>Track Orders</li>
+            <li onClick={() => navigate(`/trucks_exchange`)}>
+              Trucks & Exchange
+            </li>
             <li
               onClick={() => {
                 navigate("/seller-registration");
@@ -424,16 +464,20 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className=" md:flex flex-col  w-1/5 space-y-6 footitm">
+        <div className=" md:flex flex-col  w-1/5 space-y-6 footitm footer-bottom">
           <h2 className="text-xl font-medium" style={{ color: "gray" }}>
             Shopping
           </h2>
           <ul className="space-y-2">
-            <li>Men</li>
-            <li>Women</li>
-            <li>New Arrival</li>
-            <li>Sale</li>
-            <li>Brands</li>
+            {categary &&
+              categary.slice(0, 5)?.map((item, i) => (
+                <li
+                  onClick={() => navigate(`/categoryproducts/${item._id}`)}
+                  kay={i}
+                >
+                  {item.name.toUpperCase()}
+                </li>
+              ))}
           </ul>
         </div>
         <div className=" md:flex flex-col  w-1/5 space-y-6 footitm">

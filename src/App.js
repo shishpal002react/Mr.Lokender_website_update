@@ -45,6 +45,18 @@ import PaymentSuccess from "./MyComponents/PaymentPage/PaymentSuccess";
 import Coupon from "./MyComponents/Coupon/Coupon";
 import Notification from "./MyComponents/Notification/Notification";
 import PaymentSuccessfulPage from "./MyComponents/PaymentSuccessfulPage/PaymentSuccessfulPage";
+//footer pages
+import CancellationPolicy from "./MyComponents/Homepage/Footer/FotterPage/CancellationPolicy";
+import ContractUs from "./MyComponents/Homepage/Footer/FotterPage/ContractUs";
+import Faq from "./MyComponents/Homepage/Footer/FotterPage/Faq";
+import MyWallet from "./MyComponents/Homepage/Footer/FotterPage/MyWallet";
+import PrivacyPolicy from "./MyComponents/Homepage/Footer/FotterPage/PrivacyPolicy";
+import Return_Refund from "./MyComponents/Homepage/Footer/FotterPage/Return_Refund";
+import ShippingPolicy from "./MyComponents/Homepage/Footer/FotterPage/ShippingPolicy";
+import Terms_Condition from "./MyComponents/Homepage/Footer/FotterPage/Terms_Condition";
+import Trucks_Exchange from "./MyComponents/Homepage/Footer/FotterPage/Trucks_Exchange";
+import About from "./MyComponents/Homepage/Footer/FotterPage/About";
+import Track_Order from "./MyComponents/Homepage/Footer/FotterPage/Track_Order";
 
 const App = () => {
   return (
@@ -63,7 +75,8 @@ const App = () => {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/rent-product-view" element={<RentalSingleView />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/orders/:id" element={<Orders />} />
+        {/* <Route path="/orders/:id" element={<Orders />} /> */}
+        <Route path="/orders" element={<Orders />} />
         <Route path="/all-category" element={<MobileCategory />} />
         <Route path="/my-profile" element={<Profile />} />
         <Route path="/grocery" element={<Grocery />} />
@@ -87,7 +100,10 @@ const App = () => {
         {/* payment status page */}
         <Route path="/successpge/:id" element={<PaymentSuccess />} />
         {/* pupular product screen */}
-        <Route path="/payment/successfullpage/:id" element={<PaymentSuccessfulPage />} />
+        <Route
+          path="/payment/successfullpage/:id"
+          element={<PaymentSuccessfulPage />}
+        />
         <Route path="/couponpage" element={<Coupon />} />
         <Route path="/notification-page" element={<Notification />} />
         <Route path="/product-view/:id" element={<ProductSingleView />} />
@@ -107,6 +123,17 @@ const App = () => {
         <Route path="furniture-view" element={<FurnitureView />} />
         <Route path="appliance-view" element={<ApplianceView />} />
         <Route path="/rent" element={<Rent />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/cancellationpolicy" element={<CancellationPolicy />} />
+        <Route path="/contractus" element={<ContractUs />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/mywallet" element={<MyWallet />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+        <Route path="/return_refund" element={<Return_Refund />} />
+        <Route path="/shippingpolicy" element={<ShippingPolicy />} />
+        <Route path="/terms_condition" element={<Terms_Condition />} />
+        <Route path="/track_order" element={<Track_Order />} />
+        <Route path="/trucks_exchange" element={<Trucks_Exchange />} />
       </Routes>
       <MobileNav />
     </>

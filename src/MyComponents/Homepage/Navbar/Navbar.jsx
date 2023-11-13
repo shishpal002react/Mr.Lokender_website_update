@@ -623,7 +623,7 @@ const Navbar = () => {
               onClick={() => {
                 navigate("/rent");
               }}
-              className="ml-2"
+              className="ml-2 background-color-navbar-hidden mt-4"
             >
               Pay Rent
             </li>
@@ -631,6 +631,7 @@ const Navbar = () => {
               onClick={() => {
                 navigate("/seller-registration");
               }}
+              className="background-color-navbar-hidden mt-4"
             >
               Become a Seller
             </li>
@@ -850,7 +851,7 @@ const Navbar = () => {
               <div className="account hidden cursor-pointer md:flex items-center space-x-2">
                 <div class="flex justify-center">
                   <div>
-                    <div class="dropdown  relative">
+                    <div class="dropdown  relative mt-4">
                       <button
                         className="flex  space-x-1"
                         type="button"
@@ -858,7 +859,7 @@ const Navbar = () => {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        <h2 className="text-l font-normal ">More</h2>
+                        <p className="text-l font-normal ">More</p>
                         <MdKeyboardArrowDown className="text-2xl " />
                       </button>
                       <ul
@@ -1022,7 +1023,7 @@ const Navbar = () => {
                       aria-expanded="false"
                     >
                       <RiAccountPinCircleFill className="text-2xl " />
-                      <h2 className="text-l font-medium ">Account</h2>
+                      <p className="text-l font-medium ">Account</p>
                     </button>
                     <ul
                       class=" space-y-4
@@ -1073,7 +1074,7 @@ const Navbar = () => {
                         </a>
                       </li>
                       <li
-                        onClick={() => navigate(`/orders/${customerId}`)}
+                        onClick={() => navigate(`/orders`)}
                         className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100"
                       >
                         <FiShoppingBag className="text-2xl" />
@@ -1224,14 +1225,14 @@ const Navbar = () => {
               }}
               className="mr-3 md:flex hidden  md:mr-0 text-2xl"
             />
-            <h2
+            <p
               onClick={() => {
                 navigate("/cart");
               }}
               className="text-l hidden md:flex font-medium"
             >
               Cart
-            </h2>
+            </p>
             <CgMenuRightAlt className=" text-3xl hidden" />
           </div>
         </div>

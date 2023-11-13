@@ -6,7 +6,7 @@ export default function About() {
   return (
     <>
       <Navbar />
-      {About}
+     <p>about</p>
       <Footer />
     </>
   );

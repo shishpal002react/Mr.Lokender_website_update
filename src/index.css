@@ -1281,12 +1281,22 @@ body::-webkit-scrollbar-thumb {
   margin-left: -5px;
 }
 
-ul li:hover {
+.footer ul li:hover {
   cursor: pointer;
   color: lightblue;
 }
 
-ul li:hover {
+.footer-bottom ul li:hover {
+  cursor: pointer;
+  color: lightblue;
+}
+
+.footer-bottom ul li:hover {
+  margin-bottom: 3px;
+  text-decoration: underline;
+}
+
+.footer ul li:hover {
   margin-bottom: 3px;
   text-decoration: underline;
 }
