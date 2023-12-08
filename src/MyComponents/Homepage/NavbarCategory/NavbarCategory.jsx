@@ -29,7 +29,7 @@ const NavbarCategory = () => {
         },
       });
       console.log("product from categary", res.data.categories);
-      setSabcategary(res.data.categories);
+      setSabcategary(res.data.categories.reverse());
     } catch (error) {
       console.log(error);
     }

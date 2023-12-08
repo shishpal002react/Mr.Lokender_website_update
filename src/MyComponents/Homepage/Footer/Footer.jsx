@@ -39,8 +39,65 @@ const Footer = () => {
     }
   };
 
+  //footer detail
+  const [footerDescription, setFooterDescription] = useState([]);
+
+  const getFooterData = async () => {
+    console.log("ls", localStorage.getItem("boon"));
+    let url = `${Baseurl()}api/v1/detail`;
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("boon")}`,
+        },
+      });
+      console.log("product from categary golu", res.data.categories);
+      setFooterDescription(res.data.detail);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // get all products
+  const [products, setProducts] = useState([]);
+  const getProducts = async () => {
+    console.log("ls", localStorage.getItem("boon"));
+    let url = `${Baseurl()}api/v1/products`;
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("boon")}`,
+        },
+      });
+      console.log("product from product section", res.data.products);
+      setProducts(res.data.products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //cat-subcategory_data
+  const [catSubWiseData, setatSubWiseData] = useState([]);
+  const getCatSubProducts = async () => {
+    console.log("ls", localStorage.getItem("boon"));
+    let url = `${Baseurl()}api/v1/admin/all/cat/sub`;
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("boon")}`,
+        },
+      });
+      console.log("product from product section", res.data);
+      setatSubWiseData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     allCategary();
+    getFooterData();
+    getProducts();
+    getCatSubProducts();
   }, []);
 
   return (
@@ -57,30 +114,53 @@ const Footer = () => {
         <h2>
           <strong>Top Stories: Brand Directory</strong>
         </h2>
-
         <p style={{ marginTop: "20px" }}>
-          MOST SEARCHED FOR ON SHUBHARAMBH : Shubharambh Axis Bank Super Elite
-          Credit card | Primebook Laptops | Bounce Infinity E1 | Buy Laptop on
-          EMI | Infinix Zero Book Utra | OPPO Reno8 5G | OPPO Reno8 Pro 5G |
-          Fresh Flower Bouquet | Holi Hampers | Holi Gifts | Bouquet | Oneplus
-          Monitors | Sell Old Mobile Phones | Premium Laptops | Electronics
-          Store | Phone cover | Infinix INBook Y1 Plus | Okaya Electric Vehicles
-          | bgauss electric scooter | OPPO Reno? Pro 5G | iPhone 13 | iPhone 13
-          Pro | iPhone 13 Pro Max | iPhone 13 Mini | Google Pixel 6a covers |
-          Shubharambh Quick | Ampere Magnus | Shubharambh Help Centre | Online
-          Bost Store | Covers from Rs 99 | Shubharambh Track Orders |
-          Shubharambh Manage Orders | Shubharambh Return Orders | Shubharambh
-          Gift Cards Store | Shubharambh Axis Bank Credit Cad | Shubharambh Pay
-          Later
+          MOST SEARCHED FOR ON SHUBHARAMBH :
+          {products.map((item) => (
+            <span
+              onClick={() => navigate(`/singleprodoctview/${item._id}`)}
+              style={{ cursor: "pointer" }}
+            >
+              {item?.name} |{" "}
+            </span>
+          ))}{" "}
+          {/* Shubharambh Axis Bank Super Elite Credit card | Primebook Laptops |
+          Bounce Infinity E1 | Buy Laptop on EMI | Infinix Zero Book Utra | OPPO
+          Reno8 5G | OPPO Reno8 Pro 5G | Fresh Flower Bouquet | Holi Hampers |
+          Holi Gifts | Bouquet | Oneplus Monitors | Sell Old Mobile Phones |
+          Premium Laptops | Electronics Store | Phone cover | Infinix INBook Y1
+          Plus | Okaya Electric Vehicles | bgauss electric scooter | OPPO Reno?
+          Pro 5G | iPhone 13 | iPhone 13 Pro | iPhone 13 Pro Max | iPhone 13
+          Mini | Google Pixel 6a covers | Shubharambh Quick | Ampere Magnus |
+          Shubharambh Help Centre | Online Bost Store | Covers from Rs 99 |
+          Shubharambh Track Orders | Shubharambh Manage Orders | Shubharambh
+          Return Orders | Shubharambh Gift Cards Store | Shubharambh Axis Bank
+          Credit Cad | Shubharambh Pay Later */}
         </p>
-        <p style={{ marginTop: "10px" }}>
-          MOBILES: iPhone 126468 | iPhone 12 Pro $1268 | Phone 121288 | Vivo
-          Y91i | Vivo Y11 | Vivo Y15 | Vivo Y50 | Vivo Y12 | Reno2 F | Oppo AT2
-          | Oppo F15 | Oppo A31 | Samsung A7! | Samsung AS! | Samsung A31 |
-          Realmi X2 | iPhone 11 | Phone 11 Pro | Mobile Cover | Mobile Offers |
-          iphone x | 4G Mobile | Nokia Mobie | Samsung Mobile | iphone | Oppo
-          Mobile | Vivo Mobile
-        </p>
+        {catSubWiseData.map((item) => (
+          <>
+            <p style={{ marginTop: "10px" }}>
+              {item.name} :
+              {item.subcategories.map((items) => (
+                <span
+                  onClick={() =>
+                    navigate(`/complete/subcategorywise/product/${items?._id}`)
+                  }
+                  style={{ cursor: "pointer" }}
+                >
+                  {" "}
+                  {items?.name} |{" "}
+                </span>
+              ))}
+            </p>
+          </>
+        ))}
+        {/* MOBILES: iPhone 126468 | iPhone 12 Pro $1268 | Phone 121288 | Vivo Y91i
+        | Vivo Y11 | Vivo Y15 | Vivo Y50 | Vivo Y12 | Reno2 F | Oppo AT2 | Oppo
+        F15 | Oppo A31 | Samsung A7! | Samsung AS! | Samsung A31 | Realmi X2 |
+        iPhone 11 | Phone 11 Pro | Mobile Cover | Mobile Offers | iphone x | 4G
+        Mobile | Nokia Mobie | Samsung Mobile | iphone | Oppo Mobile | Vivo
+        Mobile
         <p style={{ marginTop: "10px" }}>
           CAMERA: GoPro Action Camera | Nikon Camera | Canon Camera | Sony
           Camera | Canon DSLR | Nikon DSLR
@@ -162,7 +242,7 @@ const Footer = () => {
           Instrument Store| Dabur Chyawangrash | aidyanath Chyawanprash | Energy
           Drinks | Toys | Milk Drink Mixes | Rakhi | Chyawanprash | Indien Flag
           | Protein Supplements
-        </p>
+        </p> */}
       </p>
       <p
         style={{
@@ -173,7 +253,15 @@ const Footer = () => {
         }}
       >
         {" "}
-        <h2>
+        {footerDescription.map((item, i) => (
+          <>
+            <h2>
+              <strong style={{ color: "grey" }}>{item?.title}</strong>
+            </h2>
+            <p style={{ color: "grey", marginTop: "10px" }}>{item?.detail}</p>
+          </>
+        ))}
+        {/* <h2>
           <strong style={{ color: "grey" }}>
             Shubharambh: The One-stop Shopping Destination
           </strong>
@@ -382,7 +470,7 @@ const Footer = () => {
           Grocery products for as low as 1 Rupee only - our 1 Rupee Store
           presents new products every day for a nominal price of 1 Rupee only.
           Terms and conditions apply.
-        </p>
+        </p> */}
       </p>
       <div className="container-fluid flex gap-15 ml-1 mt-1 dark:bg-slate-800 p-1 text-black mx-auto footcont backGround-color width-footer">
         <div className="w-2/5 space-x-4  space-y-6 footitm ">

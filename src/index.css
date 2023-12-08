@@ -845,7 +845,8 @@ body::-webkit-scrollbar-thumb {
   width: 40%;
   height: 50%;
   z-index: 9999;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+  box-shadow: 0 0 7px 8px rgba(0, 0, 0, 0.5);
   display: flex;
 }
 .logincont2 {
@@ -1299,4 +1300,28 @@ body::-webkit-scrollbar-thumb {
 .footer ul li:hover {
   margin-bottom: 3px;
   text-decoration: underline;
+}
+
+/* nav fontp0 size */
+h2 {
+  font-size: 16px !important;
+}
+
+h3 strong {
+  font-size: 16px !important;
+}
+
+/* hero image slider */
+.hero-image {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+  /* object-fit: contain; */
+}
+
+/* over lay effect */
+.overlay_effect {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
 }

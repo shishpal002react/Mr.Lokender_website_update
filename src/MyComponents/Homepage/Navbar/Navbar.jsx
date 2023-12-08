@@ -38,6 +38,9 @@ const Navbar = () => {
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
 
+  //overlay effect
+  const [showOverlay, setShowOverlay] = useState(false);
+
   //customer Id
   const [customerId, setCustomerId] = useState();
 
@@ -994,6 +997,10 @@ const Navbar = () => {
             {/* <li>More</li> */}
           </ul>
         </nav>
+
+        {/* /overlay effect
+        <div className="overlay_effect"></div> */}
+
         <div className="right-menu flex items-center space-x-6">
           <div className="account hidden md:flex items-center space-x-2">
             <div class="flex justify-center">
@@ -1225,14 +1232,14 @@ const Navbar = () => {
               }}
               className="mr-3 md:flex hidden  md:mr-0 text-2xl"
             />
-            <p
+            <h2
               onClick={() => {
                 navigate("/cart");
               }}
               className="text-l hidden md:flex font-medium"
             >
               Cart
-            </p>
+            </h2>
             <CgMenuRightAlt className=" text-3xl hidden" />
           </div>
         </div>
