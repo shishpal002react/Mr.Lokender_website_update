@@ -87,7 +87,7 @@ const Footer = () => {
         },
       });
       console.log("product from product section", res.data);
-      setatSubWiseData(res.data);
+      setatSubWiseData(res.data.slice(0, 5).reverse());
     } catch (error) {
       console.log(error);
     }

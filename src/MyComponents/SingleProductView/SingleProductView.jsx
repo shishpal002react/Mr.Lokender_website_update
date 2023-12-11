@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Baseurl from "../../Baseurl";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Rating from "../RatingComponent/Rating";
 
 const SingleProductView = () => {
   const { id } = useParams();
@@ -89,8 +90,11 @@ const SingleProductView = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("product from categary in single section", res.data.products);
-      setCategaryData(res.data.products);
+      console.log(
+        "product from categary in single golu section",
+        res.data.products
+      );
+      setCategaryData(res?.data?.products);
     } catch (error) {
       console.log(error);
     }
@@ -130,22 +134,15 @@ const SingleProductView = () => {
         <div className="mobileviewcontl">
           <div className="singlecont">
             <div className="singlecontl">
-              <div className="singleitem">
-                <img src={singleData?.images?.[0]} alt="image not found" />
-              </div>
-              <div className="singleitem">
-                <img src={singleData?.images?.[0]} alt="image not found" />
-              </div>
-              <div className="singleitem">
-                <img src={singleData?.images?.[0]} alt="image not found" />
-              </div>
-              <div className="singleitem">
-                <img src={singleData?.images?.[1]} alt="image not found" />
-              </div>
+              {singleData?.images?.slice(0, 4)?.map((item, i) => (
+                <div className="singleitem">
+                  <img src={item} key={i} alt="image not found" />
+                </div>
+              ))}
             </div>
             <div className="singlecontr">
               <div className="mobileimg">
-                <img src={singleData?.images?.[1]} alt="image not found" />
+                <img src={singleData?.images?.[0]} alt="image not found" />
               </div>
               <div className="mobilebtn">
                 <button
@@ -167,9 +164,13 @@ const SingleProductView = () => {
         <div className="mobileviewcontr">
           <div className="mobileviewdetail">
             <h6>
-              {singleData.name} ({singleData?.color?.join(",")})
+              {singleData.name} (
+              {singleData?.color?.map((item, i) => (
+                <span key={i}>{item},</span>
+              ))}
+              )
             </h6>
-            <h6>Extra &#x20B9;1190 off</h6>
+            <h6>Extra &#x20B9;{singleData?.discountAmount}off</h6>
             <div className="detaillst">
               <h6>
                 &#x20B9; {singleData.price} &#x20B9;{singleData.discountAmount}{" "}
@@ -208,23 +209,20 @@ const SingleProductView = () => {
             <div className="flex2">
               <div className="flex2l">
                 <div className="flex2lc">
-                  <h6>Rating</h6>
+                  <h6>Rating </h6>
                   <div className="staricon">
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
+                    <Rating rating={singleData.ratings} />
                   </div>
                 </div>
                 <h6>{singleData.ratings}</h6>
               </div>
               <div className="flex2r">
-                <div className="flex2ritem">
+                {/* <div className="flex2ritem">
                   <h4>2</h4>
                   <h5>Followers</h5>
-                </div>
+                </div> */}
                 <div className="flex2ritem">
-                  <h4>2</h4>
+                  <h4>{singleData?.stock}</h4>
                   <h5>Products</h5>
                 </div>
               </div>
@@ -235,15 +233,15 @@ const SingleProductView = () => {
       <div className="mobileviewcont3">
         <h3>You might be Interested in </h3>
         <div className="flex3">
-          <div className="boxitm">
-            {categaryData.map((item, i) => (
+          {categaryData.map((item, i) => (
+            <div className="boxitm">
               <img
                 style={{ margin: "10% 2%", width: "90%" }}
                 src={item?.images?.[0]}
                 alt="image is not found"
               />
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
       <Footer />

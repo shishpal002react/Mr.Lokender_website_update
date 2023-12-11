@@ -8,8 +8,9 @@ import axios from "axios";
 const ReactCont = () => {
   const [landlord, setLandlord] = useState(false);
   const [tuition, setTuition] = useState(false);
-  // const [society, setSociety] = useState(false);
-
+  const [society, setSociety] = useState(false);
+  const [office, setOffice] = useState(false);
+  const [school, setSchool] = useState(false);
   // data information
   const [data, setData] = useState("");
 
@@ -52,7 +53,7 @@ const ReactCont = () => {
           },
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem("boon")}`,
             },
           }
         );
@@ -61,7 +62,9 @@ const ReactCont = () => {
         });
         setLandlord(false);
       } catch (error) {
-        console.log(error);
+        toast(error.response.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
     };
 
@@ -84,6 +87,8 @@ const ReactCont = () => {
               <Form.Control
                 type="text"
                 value={name}
+                Label="Enter name"
+                placeholder="Enter name"
                 onChange={(e) => setName(e.target.value)}
                 required
               />
@@ -92,16 +97,18 @@ const ReactCont = () => {
               <Form.Label>Number</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter number"
                 value={number}
                 onChange={(e) => setNumber(e.target.value)}
                 required
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Payment</Form.Label>
+              <Form.Label>Payment Method</Form.Label>
               <Form.Control
                 type="text"
                 value={payment}
+                placeholder="Enter Amount"
                 onChange={(e) => setPayment(e.target.value)}
                 required
               />
@@ -110,6 +117,7 @@ const ReactCont = () => {
               <Form.Label>Account Number</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Account Number"
                 value={accountNumber}
                 onChange={(e) => setAccountNumber(e.target.value)}
                 required
@@ -119,6 +127,7 @@ const ReactCont = () => {
               <Form.Label>Confirm Account Number</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Account Number"
                 value={confirm}
                 onChange={(e) => setConfiorm(e.target.value)}
                 required
@@ -128,6 +137,7 @@ const ReactCont = () => {
               <Form.Label>IFSC Code</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter IFSC code"
                 value={ifsc}
                 onChange={(e) => setIFSC(e.target.value)}
                 required
@@ -137,6 +147,7 @@ const ReactCont = () => {
               <Form.Label>BHK</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter HBK"
                 value={bhk}
                 onChange={(e) => setBHK(e.target.value)}
                 required
@@ -146,6 +157,7 @@ const ReactCont = () => {
               <Form.Label>Rent</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Rent"
                 value={rent}
                 onChange={(e) => setRent(e.target.value)}
                 required
@@ -155,6 +167,7 @@ const ReactCont = () => {
               <Form.Label>Address</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 required
@@ -163,6 +176,7 @@ const ReactCont = () => {
             <Form.Group className="mb-3">
               <Form.Label>pinCode</Form.Label>
               <Form.Control
+                placeholder="Enter PinCode"
                 type="text"
                 value={pinCode}
                 onChange={(e) => setPinCode(e.target.value)}
@@ -173,6 +187,7 @@ const ReactCont = () => {
               <Form.Label>Pan Number</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Pan Number"
                 value={pan}
                 onChange={(e) => setPan(e.target.value)}
                 required
@@ -186,6 +201,7 @@ const ReactCont = () => {
                 border: "1px solid #19376d",
               }}
               type="submit"
+              id="mobile_rent_buttons"
             >
               Submit
             </Button>
@@ -220,7 +236,391 @@ const ReactCont = () => {
         const res = await axios.post(
           url,
           {
-            type: data,
+            type: "tuition",
+            data: {
+              name: name,
+              rollNumber: rollNumber,
+              contactNumber: contactNumber,
+              email: email,
+              payment: payment,
+              accountNumber: accountNumber,
+              confirm: confirm,
+              ifsc: ifsc,
+              address: address,
+              city: city,
+            },
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("boon")}`,
+            },
+          }
+        );
+        console.log("Data is create successfully", res.data);
+        toast("Data is create successfully", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        setTuition(false);
+      } catch (error) {
+        toast(error.response.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    };
+
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {"Tuition Rent"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={postData}>
+            <Form.Group className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Roll Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Roll Number"
+                value={rollNumber}
+                onChange={(e) => setRollNumber(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Contact Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Contact Number"
+                value={contactNumber}
+                onChange={(e) => setContactNumber(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Payment</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Payment"
+                value={payment}
+                s
+                onChange={(e) => setPayment(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Account Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Account Number"
+                value={accountNumber}
+                onChange={(e) => setAccountNumber(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Confirm Account Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Confirm Account Number"
+                value={confirm}
+                onChange={(e) => setConfirm(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>IFSC code</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter IfSC Code"
+                value={ifsc}
+                onChange={(e) => setIfsc(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Address Information </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <Button
+              style={{
+                backgroundColor: "#19376d",
+                borderRadius: "0",
+                border: "1px solid #19376d",
+                "@media only screen and (max-width: 400px)": {
+                  // Mobile styles
+                  width: "90%",
+                  margin: "auto",
+                  borderRadius: "5px",
+                  backgroundColor: "#f0f0f0",
+                  border: "none",
+                },
+              }}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    );
+  }
+
+  function MyVerticallyCenteredModalsociety(props) {
+    const [name, setName] = useState("");
+    const [rollNumber, setRollNumber] = useState("");
+    const [contactNumber, setContactNumber] = useState("");
+    const [email, setEmail] = useState("");
+    const [payment, setPayment] = useState("");
+    const [accountNumber, setAccountNumber] = useState("");
+    const [confirm, setConfirm] = useState("");
+    const [ifsc, setIfsc] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+
+    const postData = async (e) => {
+      e.preventDefault();
+      console.log("ls", localStorage.getItem("token"));
+      let url = `https://lokender-backend-api.vercel.app/api/v1/pay/rent/add`;
+      try {
+        const res = await axios.post(
+          url,
+          {
+            type: "society",
+            data: {
+              name: name,
+              rollNumber: rollNumber,
+              contactNumber: contactNumber,
+              email: email,
+              payment: payment,
+              accountNumber: accountNumber,
+              confirm: confirm,
+              ifsc: ifsc,
+              address: address,
+              city: city,
+            },
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("boon")}`,
+            },
+          }
+        );
+        console.log("Data is create successfully", res.data);
+        toast("Data is create successfully", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        setSociety(false);
+      } catch (error) {
+        toast(error.response.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    };
+
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {"Society Rent"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={postData}>
+            <Form.Group className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Roll Number"
+                value={rollNumber}
+                onChange={(e) => setRollNumber(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Contact Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Contact Number"
+                value={contactNumber}
+                onChange={(e) => setContactNumber(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Payment</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Payment"
+                value={payment}
+                s
+                onChange={(e) => setPayment(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Account Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Account Number"
+                value={accountNumber}
+                onChange={(e) => setAccountNumber(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Confirm Account Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Confirm Account Number"
+                value={confirm}
+                onChange={(e) => setConfirm(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>IFSC code</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter IfSC Code"
+                value={ifsc}
+                onChange={(e) => setIfsc(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Address Information </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <Button
+              style={{
+                backgroundColor: "#19376d",
+                borderRadius: "0",
+                border: "1px solid #19376d",
+                "@media only screen and (max-width: 400px)": {
+                  // Mobile styles
+                  width: "90%",
+                  margin: "auto",
+                  borderRadius: "5px",
+                  backgroundColor: "#f0f0f0",
+                  border: "none",
+                },
+              }}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    );
+  }
+
+  function MyVerticallyCenteredModalOffice(props) {
+    const [name, setName] = useState("");
+    const [rollNumber, setRollNumber] = useState("");
+    const [contactNumber, setContactNumber] = useState("");
+    const [email, setEmail] = useState("");
+    const [payment, setPayment] = useState("");
+    const [accountNumber, setAccountNumber] = useState("");
+    const [confirm, setConfirm] = useState("");
+    const [ifsc, setIfsc] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+
+    const postData = async (e) => {
+      e.preventDefault();
+      console.log("ls", localStorage.getItem("token"));
+      let url = `https://lokender-backend-api.vercel.app/api/v1/pay/rent/add`;
+      try {
+        const res = await axios.post(
+          url,
+          {
+            type: "office",
             data: {
               name: name,
               rollNumber: rollNumber,
@@ -244,9 +644,11 @@ const ReactCont = () => {
         toast("Data is create successfully", {
           position: toast.POSITION.TOP_CENTER,
         });
-        setTuition(false);
+        setOffice(false);
       } catch (error) {
-        console.log(error);
+        toast(error.response.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
     };
 
@@ -259,7 +661,7 @@ const ReactCont = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            {"Tuition Rent"}
+            {"Office Rent"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -268,6 +670,7 @@ const ReactCont = () => {
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -277,6 +680,7 @@ const ReactCont = () => {
               <Form.Label>Roll Number</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Roll Number"
                 value={rollNumber}
                 onChange={(e) => setRollNumber(e.target.value)}
                 required
@@ -286,6 +690,7 @@ const ReactCont = () => {
               <Form.Label>Contact Number</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Contact Number"
                 value={contactNumber}
                 onChange={(e) => setContactNumber(e.target.value)}
                 required
@@ -295,6 +700,7 @@ const ReactCont = () => {
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -304,7 +710,9 @@ const ReactCont = () => {
               <Form.Label>Payment</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Payment"
                 value={payment}
+                s
                 onChange={(e) => setPayment(e.target.value)}
                 required
               />
@@ -313,15 +721,17 @@ const ReactCont = () => {
               <Form.Label>Account Number</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Account Number"
                 value={accountNumber}
                 onChange={(e) => setAccountNumber(e.target.value)}
                 required
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Confirm</Form.Label>
+              <Form.Label>Confirm Account Number</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Confirm Account Number"
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
                 required
@@ -331,6 +741,7 @@ const ReactCont = () => {
               <Form.Label>IFSC code</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter IfSC Code"
                 value={ifsc}
                 onChange={(e) => setIfsc(e.target.value)}
                 required
@@ -340,6 +751,7 @@ const ReactCont = () => {
               <Form.Label>Address Information </Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 required
@@ -349,6 +761,7 @@ const ReactCont = () => {
               <Form.Label>City</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter City"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 required
@@ -360,6 +773,14 @@ const ReactCont = () => {
                 backgroundColor: "#19376d",
                 borderRadius: "0",
                 border: "1px solid #19376d",
+                "@media only screen and (max-width: 400px)": {
+                  // Mobile styles
+                  width: "90%",
+                  margin: "auto",
+                  borderRadius: "5px",
+                  backgroundColor: "#f0f0f0",
+                  border: "none",
+                },
               }}
               type="submit"
             >
@@ -371,82 +792,197 @@ const ReactCont = () => {
     );
   }
 
-  // function MyVerticallyCenteredModalsociety(props) {
-  //   const [name, setName] = useState("");
+  function MyVerticallyCenteredModalSchool(props) {
+    const [name, setName] = useState("");
+    const [rollNumber, setRollNumber] = useState("");
+    const [contactNumber, setContactNumber] = useState("");
+    const [email, setEmail] = useState("");
+    const [payment, setPayment] = useState("");
+    const [accountNumber, setAccountNumber] = useState("");
+    const [confirm, setConfirm] = useState("");
+    const [ifsc, setIfsc] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
 
-  //   const postData = async (e) => {
-  //     e.preventDefault();
-  //     console.log("ls", localStorage.getItem("token"));
-  //     let url = `https://lokender-backend-api.vercel.app/api/v1/admin/createCategory/${name}`;
-  //     try {
-  //       const res = await axios.post(url, formdata, {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       });
-  //       console.log("Data is create successfully", res.data);
-  //       toast("Data is create successfully", {
-  //         position: toast.POSITION.TOP_CENTER,
-  //       });
-  //       setSociety(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+    const postData = async (e) => {
+      e.preventDefault();
+      console.log("ls", localStorage.getItem("token"));
+      let url = `https://lokender-backend-api.vercel.app/api/v1/pay/rent/add`;
+      try {
+        const res = await axios.post(
+          url,
+          {
+            type: "school",
+            data: {
+              name: name,
+              rollNumber: rollNumber,
+              contactNumber: contactNumber,
+              email: email,
+              payment: payment,
+              accountNumber: accountNumber,
+              confirm: confirm,
+              ifsc: ifsc,
+              address: address,
+              city: city,
+            },
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("boon")}`,
+            },
+          }
+        );
+        console.log("Data is create successfully", res.data);
+        toast("Data is create successfully", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        setSchool(false);
+      } catch (error) {
+        toast(error.response.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    };
 
-  //   // useEffect(() => {
-  //   //   getProducts();
-  //   // }, []);
-  //   // };
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {"School Rent"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={postData}>
+            <Form.Group className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Roll Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Roll Number"
+                value={rollNumber}
+                onChange={(e) => setRollNumber(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Contact Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Contact Number"
+                value={contactNumber}
+                onChange={(e) => setContactNumber(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Payment</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Payment"
+                value={payment}
+                s
+                onChange={(e) => setPayment(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Account Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Account Number"
+                value={accountNumber}
+                onChange={(e) => setAccountNumber(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Confirm Account Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Confirm Account Number"
+                value={confirm}
+                onChange={(e) => setConfirm(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>IFSC code</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter IfSC Code"
+                value={ifsc}
+                onChange={(e) => setIfsc(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Address Information </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required
+              />
+            </Form.Group>
 
-  //   return (
-  //     <Modal
-  //       {...props}
-  //       size="lg"
-  //       aria-labelledby="contained-modal-title-vcenter"
-  //       centered
-  //     >
-  //       <Modal.Header closeButton>
-  //         <Modal.Title id="contained-modal-title-vcenter">
-  //           {" "}
-  //           {"Add Category"}
-  //         </Modal.Title>
-  //       </Modal.Header>
-  //       <Modal.Body>
-  //         <Form onSubmit={postData}>
-  //           <Form.Group className="mb-3">
-  //             <Form.Label>Image</Form.Label>
-  //             <Form.Control
-  //               type="file"
-  //               required
-  //               onChange={(e) => setFile(e.target.files[0])}
-  //             />
-  //           </Form.Group>
-  //           <Form.Group className="mb-3">
-  //             <Form.Label>Name</Form.Label>
-  //             <Form.Control
-  //               type="text"
-  //               value={name}
-  //               onChange={(e) => setName(e.target.value)}
-  //               required
-  //             />
-  //           </Form.Group>
-
-  //           <Button
-  //             style={{
-  //               backgroundColor: "#19376d",
-  //               borderRadius: "0",
-  //               border: "1px solid #19376d",
-  //             }}
-  //             type="submit"
-  //           >
-  //             Submit
-  //           </Button>
-  //         </Form>
-  //       </Modal.Body>
-  //     </Modal>
-  //   );
-  // }
+            <Button
+              style={{
+                backgroundColor: "#19376d",
+                borderRadius: "0",
+                border: "1px solid #19376d",
+                "@media only screen and (max-width: 400px)": {
+                  // Mobile styles
+                  width: "90%",
+                  margin: "auto",
+                  borderRadius: "5px",
+                  backgroundColor: "#f0f0f0",
+                  border: "none",
+                },
+              }}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    );
+  }
 
   return (
     <>
@@ -458,18 +994,21 @@ const ReactCont = () => {
         show={tuition}
         onHide={() => setTuition(false)}
       />
-      {/* <MyVerticallyCenteredModalsociety
+      <MyVerticallyCenteredModalsociety
         show={society}
         onHide={() => setSociety(false)}
-      /> */}
+      />
+      <MyVerticallyCenteredModalOffice
+        show={office}
+        onHide={() => setOffice(false)}
+      />
+      <MyVerticallyCenteredModalSchool
+        show={school}
+        onHide={() => setSchool(false)}
+      />
       <div className="rentcont">
         <h3>My Payment</h3>
-        <div className="rentitem">
-          <img src={img} alt="" />
-          <p>Lorem Ipsum</p>
-          <button>Pay</button>
-        </div>
-        <h3>Recent Payments</h3>
+
         <div className="rentitem">
           <img src={img} alt="" />
           <p>Landlord</p>
@@ -478,22 +1017,23 @@ const ReactCont = () => {
         <div className="rentitem">
           <img src={img} alt="" />
           <p>Tuition</p>
-          <button onClick={() => handleData("tuition")}>Pay</button>
+          <button onClick={() => setTuition(true)}>Pay</button>
         </div>
         <div className="rentitem">
           <img src={img} alt="" />
           <p>Society</p>
-          <button onClick={() => handleData("society")}>Pay</button>
+          {/* <button onClick={() => handleData("society")}>Pay</button> */}
+          <button onClick={() => setSociety(true)}>Pay</button>
         </div>
         <div className="rentitem">
           <img src={img} alt="" />
           <p>office</p>
-          <button onClick={() => handleData("office")}>Pay</button>
+          <button onClick={() => setOffice(true)}>Pay</button>
         </div>
         <div className="rentitem">
           <img src={img} alt="" />
           <p>school</p>
-          <button onClick={() => handleData("school")}>Pay</button>
+          <button onClick={() => setSchool(true)}>Pay</button>
         </div>
       </div>
       <ToastContainer />

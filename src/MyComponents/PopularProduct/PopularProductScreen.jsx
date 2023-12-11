@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import axios from "axios";
 import Baseurl from "../../Baseurl";
+import Rating from "../RatingComponent/Rating";
 // import { OfferData } from './../../ArrayData/ArrayData';
 
 const PopularProductScreen = () => {
@@ -222,10 +223,11 @@ const PopularProductScreen = () => {
                     <div className="proditmflex">
                       <p>{item.description}</p>
                       <div className="staricon">
+                        <Rating rating={item.ratings} />
+                        {/* <i className="fas fa-star"></i>
                         <i className="fas fa-star"></i>
                         <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
+                        <i className="fas fa-star"></i> */}
                       </div>
                     </div>
                     <div className="proditmflex">

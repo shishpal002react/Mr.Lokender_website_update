@@ -510,7 +510,16 @@ const Navbar = () => {
                             >
                               {category.name}
                             </div>
-                            {/* <button key={i} onClick={()=>navigate(`complete/categorywise/product/${category._id}`)}>{category.name}</button> */}
+                            <button
+                              key={i}
+                              onClick={() =>
+                                navigate(
+                                  `complete/categorywise/product/${category._id}`
+                                )
+                              }
+                            >
+                              {category.name}
+                            </button>
                           </>
                         );
                       })}
