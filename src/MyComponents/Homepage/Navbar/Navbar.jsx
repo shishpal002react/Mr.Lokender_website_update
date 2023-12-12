@@ -640,12 +640,12 @@ const Navbar = () => {
               Pay Rent
             </li>
             <li
-              onClick={() => {
-                navigate("/seller-registration");
-              }}
+              // onClick={() => {
+              //   navigate("/seller-registration");
+              // }}
               className="background-color-navbar-hidden mt-4"
             >
-              Become a Seller
+              Upcoming a Seller
             </li>
             {/* <div class="right-menu flex items-center space-x-6">
               <button

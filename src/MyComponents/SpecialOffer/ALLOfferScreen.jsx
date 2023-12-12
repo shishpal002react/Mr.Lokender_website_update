@@ -19,7 +19,7 @@ const ALLOfferScreen = () => {
   };
 
   const [offerData, setOfferData] = useState([]);
-  const getProducts = async () => {
+  const offerProduct = async () => {
     console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/my/products/offers`;
     try {
@@ -52,7 +52,7 @@ const ALLOfferScreen = () => {
   };
 
   useEffect(() => {
-    getProducts();
+    offerProduct();
     gatCategory();
   }, []);
 
@@ -93,23 +93,32 @@ const ALLOfferScreen = () => {
               <Accordion.Item eventKey="0">
                 <Accordion.Header>Prices</Accordion.Header>
                 <Accordion.Body>
-                  <select onChange={(e) => setMinPrice(e.target.value)}>
-                    <option>₹5,000</option>
-                    <option value={"10000"}>₹10,000</option>
-                    <option>₹15,000</option>
-                    <option>₹20,000</option>
-                    <option>₹25,000</option>
-                    <option>₹30,000</option>
-                  </select>
-                  <p>to</p>
-                  <select onChange={(e) => setMaxPrice(e.target.value)}>
-                    <option>₹5,000</option>
-                    <option value={"10000"}>₹10,000</option>
-                    <option>₹15,000</option>
-                    <option>₹20,000</option>
-                    <option>₹25,000</option>
-                    <option>₹30,000</option>
-                  </select>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      textAlign: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <select onChange={(e) => setMinPrice(e.target.value)}>
+                      <option>₹5,000</option>
+                      <option value={"10000"}>₹10,000</option>
+                      <option>₹15,000</option>
+                      <option>₹20,000</option>
+                      <option>₹25,000</option>
+                      <option>₹30,000</option>
+                    </select>
+                    <p style={{ marginTop: "6px" }}>To</p>
+                    <select onChange={(e) => setMaxPrice(e.target.value)}>
+                      <option>₹5,000</option>
+                      <option value={"10000"}>₹10,000</option>
+                      <option>₹15,000</option>
+                      <option>₹20,000</option>
+                      <option>₹25,000</option>
+                      <option>₹30,000</option>
+                    </select>
+                  </div>
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
@@ -202,11 +211,11 @@ const ALLOfferScreen = () => {
               id="slider"
               className=" fashrightcont w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
             >
-              <div className="fashrightlabel w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300">
-                {offerData.map((item) => (
-                  <h3>{item?.productId?.brand}</h3>
-                ))}
-              </div>
+              {offerData.map((item) => (
+                <div className="fashrightlabel w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300">
+                  <h3>{item?.brand}</h3>
+                </div>
+              ))}
             </div>
             <MdChevronRight onClick={SlideRight} size={40} />
           </div>

@@ -6,7 +6,7 @@ import { MdLocationOn, MdOutlineAccountBalanceWallet } from "react-icons/md";
 import Footer from "../Footer/Footer";
 import { AiFillStar } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
-import {useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Baseurl from "../../../Baseurl";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -28,7 +28,7 @@ const ProductSingleView = () => {
       const res = await axios.post(url, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("post request cart" ,res);
+      console.log("post request cart", res);
       toast.success("SuccessFully ! Added to cart");
     } catch (error) {
       console.log(error);
@@ -55,10 +55,10 @@ const ProductSingleView = () => {
   };
 
   ///single data api and  get all products
-  const {id}=useParams();
-  const [singleData,setSingleData]=useState("");
-  const getSingleProducts = async() => {
-    console.log("ls",(localStorage.getItem("boon")))
+  const { id } = useParams();
+  const [singleData, setSingleData] = useState("");
+  const getSingleProducts = async () => {
+    console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/product/single/${id}`;
     try {
       const res = await axios.get(url, {
@@ -66,17 +66,16 @@ const ProductSingleView = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("product from product section",res.data.product);
+      console.log("product from product section", res.data.product);
       setSingleData(res.data.product);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  useEffect(() => {  
-    getSingleProducts();    
+  useEffect(() => {
+    getSingleProducts();
   }, []);
-
 
   return (
     <>
@@ -87,7 +86,7 @@ const ProductSingleView = () => {
             <div className=" flex justify-center">
               <img
                 className="h-96 self-center"
-                 src={singleData?.images?.[0]}
+                src={singleData?.images?.[0]}
                 alt=""
               />
             </div>
@@ -359,7 +358,7 @@ const ProductSingleView = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-10 bg-white rounded-md p-6 mx-4">
           <div className="space-y-2 mb-3">
             <h2 className="text-2xl font-semibold">Rating & Reviews</h2>
@@ -470,7 +469,6 @@ const ProductSingleView = () => {
       </div>
       <Footer />
     </>
-   
   );
 };
 

@@ -5,6 +5,7 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import axios from "axios";
 import Baseurl from "../../Baseurl";
 import Rating from "../RatingComponent/Rating";
+import Accordion from "react-bootstrap/Accordion";
 
 const CategoryWiseDate = ({ id }) => {
   const navigate = useNavigate();
@@ -19,69 +20,39 @@ const CategoryWiseDate = ({ id }) => {
 
   //api show catogery is calling
   const [category, setCategory] = useState([]);
-  const getProducts = async () => {
-    console.log("ls", localStorage.getItem("boon"));
-    let url = `${Baseurl()}api/v1/product/${id}`;
+  const gatCategory = async () => {
+    let url = `${Baseurl()}api/v1/admin/allCategory`;
     try {
       const res = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("product from shoes section", res.data.products);
-      setCategory(res.data.products);
+      console.log("offer product", res.data.data);
+      setCategory(res?.data?.categories);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getProducts();
-  }, [id]);
+    gatCategory();
+  }, []);
 
-  //filter category
-  // const [categorySearch,setCategorySearch]=useState();
-  const [minpriceSearch, setMinPriceSearch] = useState();
-  const [maxpriceSearch, setMaxPriceSearch] = useState();
-  const [brandSearch, setbrandSearch] = useState();
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
 
-  const getSearchData = async () => {
-    console.log("ls", localStorage.getItem("boon"));
-    let url = `${Baseurl()}api/v1/filters?minPrice=${minpriceSearch}&maxPrice=${maxpriceSearch}&categoryId=&brand=${brandSearch}`;
+  const filterProduct = async () => {
     try {
-      const res = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("boon")}`,
-        },
-      });
-      // console.log("product from shoes section",res.data.products);
-      setCategory(res.data.products);
-    } catch (error) {
-      console.log(error);
-    }
+      const res = await axios.get(
+        `https://lokender-backend-api.vercel.app/api/v1/filters?minPrice=${minPrice}&maxPrice=${maxPrice}`
+      );
+    } catch {}
   };
 
   useEffect(() => {
-    getSearchData();
-  }, [id, maxpriceSearch]);
-
-  //category wise data
-
-  //  const getSubCat = async () => {
-  //   let url = `${Baseurl()}api/v1/admin/allSubCategory`;
-  //   try {
-  //     const res = await axios.get(url);
-  //     setSubCat(res.data.categories);
-  //     // setFilterData(res.data.categories);
-  //     console.log(res.data, "subc");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getSubCat();
-  // }, []);
+    filterProduct();
+  }, [maxPrice, minPrice]);
 
   return (
     <>
@@ -89,59 +60,56 @@ const CategoryWiseDate = ({ id }) => {
         <div className="fashviewcontl">
           <h3>Filters</h3>
           <div className="filtercont ft">
-            <div className="filteritem">
-              <div class="dropdown" tabIndex="0">
-                <div className="dpc">
-                  <span>CATEGORIES</span>
-                  <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div className="dropDownContent">
-                  <p>Mobiles & Accessories</p>
-                  <p>Mobiles & Accessories</p>
-                </div>
-              </div>
-            </div>
+            <Accordion defaultActiveKey="0">
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>CATEGORIES</Accordion.Header>
+                <Accordion.Body>
+                  {category.slice(0, 10)?.map((item) => (
+                    <p>{item.name}</p>
+                  ))}
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
 
-            <div className="filteritem">
-              <div class="dropdown" tabIndex="0">
-                <div className="dpc">
-                  <span>PRICE</span>
-                  <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div className="dropDownContent">
-                  <div className="selectoption">
-                    <select onChange={(e) => setMinPriceSearch(e.target.value)}>
-                      <option value="0">₹5,000</option>
-                      <option value="5000">₹10,000</option>
-                      <option value="10000">₹15,000</option>
-                      <option value="15000">₹20,000</option>
-                      <option value="20000">₹25,000</option>
-                      <option value="25000">₹30,000</option>
+            <Accordion defaultActiveKey="0">
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Prices</Accordion.Header>
+                <Accordion.Body>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      textAlign: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <select onChange={(e) => setMinPrice(e.target.value)}>
+                      <option>₹5,000</option>
+                      <option value={"10000"}>₹10,000</option>
+                      <option>₹15,000</option>
+                      <option>₹20,000</option>
+                      <option>₹25,000</option>
+                      <option>₹30,000</option>
                     </select>
-                    <p>to</p>
-                    <select onChange={(e) => setMaxPriceSearch(e.target.value)}>
-                      <option value="5000">₹5,000</option>
-                      <option value="10000">₹10,000</option>
-                      <option value="15000">₹15,000</option>
-                      <option value="20000">₹20,000</option>
-                      <option value="25000">₹25,000</option>
-                      <option value="30000">₹30,000</option>
+                    <p style={{ marginTop: "6px" }}>To</p>
+                    <select onChange={(e) => setMaxPrice(e.target.value)}>
+                      <option>₹5,000</option>
+                      <option value={"10000"}>₹10,000</option>
+                      <option>₹15,000</option>
+                      <option>₹20,000</option>
+                      <option>₹25,000</option>
+                      <option>₹30,000</option>
                     </select>
                   </div>
-                </div>
-              </div>
-            </div>
-
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
             <div className="filteritem">
               <div class="dropdown">
                 <div className="dpc">
                   <span>BRAND</span>
                   <i class="fa-solid fa-caret-down"></i>
                 </div>
-                {/* <p>radmi</p>
-                <p>appleeeee</p>
-                <p>radmi</p>
-                <p>radmi</p> */}
               </div>
             </div>
             <div className="filteritem">
@@ -225,18 +193,18 @@ const CategoryWiseDate = ({ id }) => {
               id="slider"
               className=" fashrightcont w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
             >
-              <div className="fashrightlabel w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300">
-                {category.map((item) => (
-                  <h3>{item?.productId?.brand}</h3>
-                ))}
-              </div>
+              {category.map((item) => (
+                <div className="fashrightlabel w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300">
+                  <h3>{item?.name}</h3>
+                </div>
+              ))}
             </div>
             <MdChevronRight onClick={SlideRight} size={40} />
           </div>
           <div className="fashrightprod">
             <div className="fashrightproditm">
               <div className="rff">
-                {category.map((item) => (
+                {category.slice(0, 4).map((item) => (
                   <div className="proditm">
                     <img
                       src={item.images}

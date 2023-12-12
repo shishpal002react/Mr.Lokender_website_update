@@ -41,7 +41,7 @@ const SingleProductView = () => {
     console.log("add to cart clicked");
     let url = `${Baseurl()}api/v1/cart`;
     try {
-      const body = { productId: "64a539f0b111507123d83845", quantity: 1 };
+      const body = { productId: id, quantity: 1 };
       const res = await axios.post(url, body, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,

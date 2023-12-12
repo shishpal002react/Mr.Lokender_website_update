@@ -6,6 +6,7 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import axios from "axios";
 import Baseurl from "../../Baseurl";
 import Rating from "../RatingComponent/Rating";
+import Accordion from "react-bootstrap/Accordion";
 // import { OfferData } from './../../ArrayData/ArrayData';
 
 const PopularProductScreen = () => {
@@ -37,33 +38,41 @@ const PopularProductScreen = () => {
     }
   };
 
+  const [category, setCategory] = useState([]);
+  const gatCategory = async () => {
+    let url = `${Baseurl()}api/v1/admin/allCategory`;
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("boon")}`,
+        },
+      });
+      console.log("offer product", res.data.data);
+      setCategory(res?.data?.categories);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getProducts();
+    gatCategory();
   }, []);
 
-  //   //filter offerData
-  //   const [searchData, setSearchData] = useState([]);
-  //   const [searchofferData,setSearchofferData]=useState([]);
-  //   const getSearchData = async() => {
-  //     console.log("ls",(localStorage.getItem("boon")))
-  //     let url = `${Baseurl()}api/v1/filters?minPrice=0000&maxPrice=3999&offerDataId=64a2d0a125dba018a6e0a5c6&brand=`
-  //     try {
-  //       const res = await axios.get(url, {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("boon")}`,
-  //         },
-  //       });
-  //       console.log("product from shoes section",res.data.products);
-  //       setSearchData(res.data.products);
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
 
-  // //depandance is required to add
-  //   useEffect(() => {
-  //     getSearchData();
-  //   }, []);
+  const filterProduct = async () => {
+    try {
+      const res = await axios.get(
+        `https://lokender-backend-api.vercel.app/api/v1/filters?minPrice=${minPrice}&maxPrice=${maxPrice}`
+      );
+    } catch {}
+  };
+
+  useEffect(() => {
+    filterProduct();
+  }, [maxPrice, minPrice]);
 
   return (
     <>
@@ -71,44 +80,50 @@ const PopularProductScreen = () => {
         <div className="fashviewcontl">
           <h3>Filters</h3>
           <div className="filtercont ft">
-            <div className="filteritem">
-              <div class="dropdown" tabIndex="0">
-                <div className="dpc">
-                  <span>CATEGORIES</span>
-                  <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div className="dropDownContent">
-                  <p>Mobiles & Accessories</p>
-                  <p>Mobiles & Accessories</p>
-                </div>
-              </div>
-            </div>
+            <Accordion defaultActiveKey="0">
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>CATEGORIES</Accordion.Header>
+                <Accordion.Body>
+                  {category.slice(0, 10)?.map((item) => (
+                    <p>{item.name}</p>
+                  ))}
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
 
-            <div className="filteritem">
-              <div class="dropdown" tabIndex="0">
-                <div className="dpc">
-                  <span>PRICE</span>
-                  <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div className="dropDownContent">
-                  <div className="selectoption">
-                    <select>
-                      <option>Min</option>
-                    </select>
-                    <p>to</p>
-                    <select>
+            <Accordion defaultActiveKey="0">
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Prices</Accordion.Header>
+                <Accordion.Body>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      textAlign: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <select onChange={(e) => setMinPrice(e.target.value)}>
                       <option>₹5,000</option>
-                      <option>₹10,000</option>
+                      <option value={"10000"}>₹10,000</option>
+                      <option>₹15,000</option>
+                      <option>₹20,000</option>
+                      <option>₹25,000</option>
+                      <option>₹30,000</option>
+                    </select>
+                    <p style={{ marginTop: "6px" }}>To</p>
+                    <select onChange={(e) => setMaxPrice(e.target.value)}>
+                      <option>₹5,000</option>
+                      <option value={"10000"}>₹10,000</option>
                       <option>₹15,000</option>
                       <option>₹20,000</option>
                       <option>₹25,000</option>
                       <option>₹30,000</option>
                     </select>
                   </div>
-                </div>
-              </div>
-            </div>
-
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
             <div className="filteritem">
               <div class="dropdown">
                 <div className="dpc">
@@ -198,11 +213,11 @@ const PopularProductScreen = () => {
               id="slider"
               className=" fashrightcont w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
             >
-              <div className="fashrightlabel w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300">
-                {offerData.map((item) => (
-                  <h3>{item?.productId?.brand}</h3>
-                ))}
-              </div>
+              {offerData.map((item) => (
+                <div className="fashrightlabel w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300">
+                  <h3>{item?.brand}</h3>
+                </div>
+              ))}
             </div>
             <MdChevronRight onClick={SlideRight} size={40} />
           </div>
@@ -224,10 +239,6 @@ const PopularProductScreen = () => {
                       <p>{item.description}</p>
                       <div className="staricon">
                         <Rating rating={item.ratings} />
-                        {/* <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i> */}
                       </div>
                     </div>
                     <div className="proditmflex">

@@ -25,9 +25,10 @@ const Orders = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      // setCartPro(res.data.data.products);
-      console.log("order data after api calling", res);
+
+      console.log("order data after api calling", res.data);
       setOrders(res.data);
+      console.log("order data after api calling", orders);
     } catch (error) {
       console.log(error);
     }
@@ -47,27 +48,45 @@ const Orders = () => {
               <h3>My Orders</h3>
             </div>
           </div>
-          {Object.keys(orders).length !== 0 ? (
+          {orders.length !== 0 ? (
             <div className="cartcont2">
               <div className="cartcont2l">
-                {orders?.products?.map((item, i) => {
+                {orders?.slice(0, 3)?.map((item, i) => {
                   return (
-                    <div className="cartprod">
-                      <div className="cartprodr">
-                        {/* <h6>Product Price: {item.price}</h6> */}
-                        <p>Quantity: {item?.quantity}</p>
-                        {/* <p>Seller: {product.sellerId}</p> */}
+                    <>
+                      <div
+                        style={{ width: "100%" }}
+                        key={i}
+                        className="cartprod"
+                      >
+                        <div
+                          style={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <div>
+                            {item.products?.map((p) => (
+                              <div className="cartprodr">
+                                {/* <h6>Product Price: {item.price}</h6> */}
+                                <p>Quantity: {p?.quantity}</p>
+                                {/* <p>Seller: {product.sellerId}</p> */}
 
-                        <p> &#x20b9; {item?.price}</p>
-                        <hr style={{ color: "black" }}></hr>
+                                <p> &#x20b9; {p?.price}</p>
+                                <hr style={{ color: "black" }}></hr>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="cartcont2r">
+                            <h6>Total Amount : &#x20b9; {item?.totalAmount}</h6>
+                            <p>Product Status: {item?.status}</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    </>
                   );
                 })}
-              </div>
-              <div className="cartcont2r">
-                <h6>Total Amount : &#x20b9; {orders?.totalAmount}</h6>
-                <p>Product Status: {orders?.status}</p>
               </div>
             </div>
           ) : (

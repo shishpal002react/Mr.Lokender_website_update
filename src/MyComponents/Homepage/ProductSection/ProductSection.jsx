@@ -182,7 +182,8 @@ const ProductSection = () => {
                         >
                           <img
                             onClick={() => {
-                              navigate(`/categoryproducts/${product._id}`);
+                              // navigate(`/categoryproducts/${product._id}`);
+                              navigate(`/singleprodoctview/${product._id}`);
                             }}
                             src={product.images[0]}
                             alt=""
@@ -362,7 +363,8 @@ const ProductSection = () => {
                     >
                       <img
                         onClick={() => {
-                          navigate(`/categoryproducts/${product._id}`);
+                          // navigate(`/categoryproducts/${product._id}`);
+                          navigate(`/singleprodoctview/${product._id}`);
                         }}
                         src={product.images[0]}
                         alt=""
@@ -525,7 +527,8 @@ const ProductSection = () => {
                         >
                           <img
                             onClick={() => {
-                              navigate(`/categoryproducts/${product._id}`);
+                              // navigate(`/categoryproducts/${product._id}`);
+                              navigate(`/singleprodoctview/${product._id}`);
                             }}
                             src={product.images[0]}
                             alt=""
@@ -713,7 +716,8 @@ const ProductSection = () => {
                         >
                           <img
                             onClick={() => {
-                              navigate(`/categoryproducts/${product._id}`);
+                              // navigate(`/categoryproducts/${product._id}`);
+                              navigate(`/singleprodoctview/${product._id}`);
                             }}
                             src={product.images[0]}
                             alt=""
