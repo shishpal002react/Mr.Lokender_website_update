@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 import img5 from "../../Images/d57.png";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,9 @@ import Accordion from "react-bootstrap/Accordion";
 
 const ALLOfferScreen = () => {
   const navigate = useNavigate();
+  const [categoryId, setCategoryId] = useState("");
+  const [products, setProducts] = useState([]);
+
   const SlideLeft = () => {
     var slider = document.getElementById("slider");
     slider.scrollLeft = slider.scrollLeft - 500;
@@ -30,6 +33,7 @@ const ALLOfferScreen = () => {
       });
       console.log("offer product", res.data.data);
       setOfferData(res.data.data);
+      setProducts(res.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -60,17 +64,18 @@ const ALLOfferScreen = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
 
-  const filterProduct = async () => {
+  const filterProduct = useCallback(async () => {
     try {
       const res = await axios.get(
-        `https://lokender-backend-api.vercel.app/api/v1/filters?minPrice=${minPrice}&maxPrice=${maxPrice}`
+        `https://lokender-backend-api.vercel.app/api/v1/filters?minPrice=${minPrice}&maxPrice=${maxPrice}&categoryId=${categoryId}`
       );
+      setProducts(res.data.products);
     } catch {}
-  };
+  }, [minPrice, maxPrice, categoryId]);
 
   useEffect(() => {
     filterProduct();
-  }, [maxPrice, minPrice]);
+  }, [filterProduct]);
 
   return (
     <>
@@ -83,7 +88,12 @@ const ALLOfferScreen = () => {
                 <Accordion.Header>CATEGORIES</Accordion.Header>
                 <Accordion.Body>
                   {category.slice(0, 10)?.map((item) => (
-                    <p>{item.name}</p>
+                    <p
+                      onClick={() => setCategoryId(item._id)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {item.name}
+                    </p>
                   ))}
                 </Accordion.Body>
               </Accordion.Item>
@@ -102,27 +112,23 @@ const ALLOfferScreen = () => {
                     }}
                   >
                     <select onChange={(e) => setMinPrice(e.target.value)}>
-                      <option>₹5,000</option>
-                      <option value={"10000"}>₹10,000</option>
-                      <option>₹15,000</option>
-                      <option>₹20,000</option>
-                      <option>₹25,000</option>
-                      <option>₹30,000</option>
+                      <option value={"0"}>₹ 0</option>
+                      <option value={"1000"}>₹1,000</option>
+                      <option value={"2000"}>₹2,000</option>
+                      <option value={"3000"}>₹3,000</option>
                     </select>
                     <p style={{ marginTop: "6px" }}>To</p>
                     <select onChange={(e) => setMaxPrice(e.target.value)}>
-                      <option>₹5,000</option>
-                      <option value={"10000"}>₹10,000</option>
-                      <option>₹15,000</option>
-                      <option>₹20,000</option>
-                      <option>₹25,000</option>
-                      <option>₹30,000</option>
+                      <option value={"1000"}>₹1,000</option>
+                      <option value={"2000"}>₹2,000</option>
+                      <option value={"3000"}>₹3,000</option>
+                      <option value={"40000"}>₹4,000</option>
                     </select>
                   </div>
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
-            <div className="filteritem">
+            {/* <div className="filteritem">
               <div class="dropdown">
                 <div className="dpc">
                   <span>BRAND</span>
@@ -201,7 +207,7 @@ const ALLOfferScreen = () => {
                   <i class="fa-solid fa-caret-down"></i>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="fashviewcontr">
@@ -211,7 +217,7 @@ const ALLOfferScreen = () => {
               id="slider"
               className=" fashrightcont w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
             >
-              {offerData.map((item) => (
+              {offerData?.map((item) => (
                 <div className="fashrightlabel w-[220px] inline-block p-2 cursor-pointer hover:scale-105 case-in-out duration-300">
                   <h3>{item?.brand}</h3>
                 </div>
@@ -222,7 +228,7 @@ const ALLOfferScreen = () => {
           <div className="fashrightprod">
             <div className="fashrightproditm">
               <div className="rff">
-                {offerData.map((item) => (
+                {products?.map((item) => (
                   <div className="proditm">
                     <img
                       src={item?.images?.[0]}

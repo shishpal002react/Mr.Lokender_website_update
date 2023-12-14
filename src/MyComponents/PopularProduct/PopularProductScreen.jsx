@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import img5 from "../../Images/d57.png";
 import { useNavigate } from "react-router-dom";
@@ -7,23 +7,27 @@ import axios from "axios";
 import Baseurl from "../../Baseurl";
 import Rating from "../RatingComponent/Rating";
 import Accordion from "react-bootstrap/Accordion";
-// import { OfferData } from './../../ArrayData/ArrayData';
+
+// Slider
+const SlideLeft = () => {
+  var slider = document.getElementById("slider");
+  slider.scrollLeft = slider.scrollLeft - 500;
+};
+const SlideRight = () => {
+  var slider = document.getElementById("slider");
+  slider.scrollLeft = slider.scrollLeft + 500;
+};
 
 const PopularProductScreen = () => {
   const navigate = useNavigate();
-  const SlideLeft = () => {
-    var slider = document.getElementById("slider");
-    slider.scrollLeft = slider.scrollLeft - 500;
-  };
-  const SlideRight = () => {
-    var slider = document.getElementById("slider");
-    slider.scrollLeft = slider.scrollLeft + 500;
-  };
-
-  //api show catogery is calling
+  const [category, setCategory] = useState([]);
+  const [categoryId, setCategoryId] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [products, setProducts] = useState([]);
   const [offerData, setOfferData] = useState([]);
+
   const getProducts = async () => {
-    console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/my/products/popular`;
     try {
       const res = await axios.get(url, {
@@ -38,7 +42,6 @@ const PopularProductScreen = () => {
     }
   };
 
-  const [category, setCategory] = useState([]);
   const gatCategory = async () => {
     let url = `${Baseurl()}api/v1/admin/allCategory`;
     try {
@@ -54,25 +57,23 @@ const PopularProductScreen = () => {
     }
   };
 
+  const filterProduct = useCallback(async () => {
+    try {
+      const res = await axios.get(
+        `https://lokender-backend-api.vercel.app/api/v1/filters?minPrice=${minPrice}&maxPrice=${maxPrice}&categoryId=${categoryId}`
+      );
+      setProducts(res.data.products);
+    } catch {}
+  }, [minPrice, maxPrice, categoryId]);
+
   useEffect(() => {
     getProducts();
     gatCategory();
   }, []);
 
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
-
-  const filterProduct = async () => {
-    try {
-      const res = await axios.get(
-        `https://lokender-backend-api.vercel.app/api/v1/filters?minPrice=${minPrice}&maxPrice=${maxPrice}`
-      );
-    } catch {}
-  };
-
   useEffect(() => {
     filterProduct();
-  }, [maxPrice, minPrice]);
+  }, [filterProduct]);
 
   return (
     <>
@@ -85,7 +86,12 @@ const PopularProductScreen = () => {
                 <Accordion.Header>CATEGORIES</Accordion.Header>
                 <Accordion.Body>
                   {category.slice(0, 10)?.map((item) => (
-                    <p>{item.name}</p>
+                    <p
+                      onClick={() => setCategoryId(item._id)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {item.name}
+                    </p>
                   ))}
                 </Accordion.Body>
               </Accordion.Item>
@@ -104,27 +110,23 @@ const PopularProductScreen = () => {
                     }}
                   >
                     <select onChange={(e) => setMinPrice(e.target.value)}>
-                      <option>₹5,000</option>
-                      <option value={"10000"}>₹10,000</option>
-                      <option>₹15,000</option>
-                      <option>₹20,000</option>
-                      <option>₹25,000</option>
-                      <option>₹30,000</option>
+                      <option value={"0"}>₹ 0</option>
+                      <option value={"1000"}>₹1,000</option>
+                      <option value={"2000"}>₹2,000</option>
+                      <option value={"3000"}>₹3,000</option>
                     </select>
                     <p style={{ marginTop: "6px" }}>To</p>
                     <select onChange={(e) => setMaxPrice(e.target.value)}>
-                      <option>₹5,000</option>
-                      <option value={"10000"}>₹10,000</option>
-                      <option>₹15,000</option>
-                      <option>₹20,000</option>
-                      <option>₹25,000</option>
-                      <option>₹30,000</option>
+                      <option value={"1000"}>₹1,000</option>
+                      <option value={"2000"}>₹2,000</option>
+                      <option value={"3000"}>₹3,000</option>
+                      <option value={"40000"}>₹4,000</option>
                     </select>
                   </div>
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
-            <div className="filteritem">
+            {/* <div className="filteritem">
               <div class="dropdown">
                 <div className="dpc">
                   <span>BRAND</span>
@@ -203,7 +205,7 @@ const PopularProductScreen = () => {
                   <i class="fa-solid fa-caret-down"></i>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="fashviewcontr">
@@ -224,19 +226,20 @@ const PopularProductScreen = () => {
           <div className="fashrightprod">
             <div className="fashrightproditm">
               <div className="rff">
-                {offerData.slice(0, 4).map((item) => (
+                {products?.map((item) => (
                   <div className="proditm">
                     <img
                       src={item?.images?.[0]}
                       onClick={() => navigate(`/singleprodoctview/${item._id}`)}
                       alt=""
+                      className="thumbNail"
                     />
                     <div className="proditmflex">
                       <h5>{item.name}</h5>
                       <button>80% off</button>
                     </div>
                     <div className="proditmflex">
-                      <p>{item.description}</p>
+                      <p>{item.description?.slice(0, 25)}</p>
                       <div className="staricon">
                         <Rating rating={item.ratings} />
                       </div>

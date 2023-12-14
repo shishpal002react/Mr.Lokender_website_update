@@ -18,8 +18,6 @@ const Cart = () => {
   const [pop, setPop] = useState(false);
   const [cartProducts, setCartProducts] = useState([]);
   const [cartDetails, setCartDetails] = useState({});
-  const user = localStorage.getItem("userDataBoon");
-  const [quantity, setQuantity] = useState();
   const [add, setAdd] = useState("");
   const [total, setTotal] = useState([]);
 

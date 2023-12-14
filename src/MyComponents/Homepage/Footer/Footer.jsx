@@ -32,7 +32,6 @@ const Footer = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("product from categary golu", res.data.categories);
       setCategory(res.data.categories);
     } catch (error) {
       console.log(error);
@@ -43,7 +42,7 @@ const Footer = () => {
   const [footerDescription, setFooterDescription] = useState([]);
 
   const getFooterData = async () => {
-    console.log("ls", localStorage.getItem("boon"));
+
     let url = `${Baseurl()}api/v1/detail`;
     try {
       const res = await axios.get(url, {
@@ -61,7 +60,6 @@ const Footer = () => {
   // get all products
   const [products, setProducts] = useState([]);
   const getProducts = async () => {
-    console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/products`;
     try {
       const res = await axios.get(url, {
@@ -69,7 +67,6 @@ const Footer = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("product from product section", res.data.products);
       setProducts(res.data.products);
     } catch (error) {
       console.log(error);
@@ -78,7 +75,6 @@ const Footer = () => {
   //cat-subcategory_data
   const [catSubWiseData, setatSubWiseData] = useState([]);
   const getCatSubProducts = async () => {
-    console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/admin/all/cat/sub`;
     try {
       const res = await axios.get(url, {

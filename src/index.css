@@ -2,9 +2,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: Quicksand !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -16,8 +14,7 @@ body {
 @tailwind utilities;
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: Quicksand !important;
 }
 body::-webkit-scrollbar {
   width: 10px;
@@ -90,7 +87,6 @@ body::-webkit-scrollbar-thumb {
   padding-left: 3%;
 }
 .fashioncont h3 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
@@ -112,7 +108,6 @@ body::-webkit-scrollbar-thumb {
   width: 20%;
 }
 .fashviewcontl h3 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 32px;
@@ -214,7 +209,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 .dropdown span {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -265,7 +259,6 @@ body::-webkit-scrollbar-thumb {
   margin-right: 5%;
 }
 .fashrightlabel h3 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
@@ -286,7 +279,9 @@ body::-webkit-scrollbar-thumb {
   height: 100%;
   background-color: #fff;
   display: flex;
-  gap: 1px;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 .fashrightproditm {
   width: 98%;
@@ -297,7 +292,6 @@ body::-webkit-scrollbar-thumb {
   background-color: #5047ff;
   color: #fff;
   width: 40px;
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -306,38 +300,33 @@ body::-webkit-scrollbar-thumb {
 }
 
 .proditm {
-  display: flex;
-  flex-direction: column;
-  width: 25%;
-  gap: 5px;
+  width: 200px;
 }
 .proditm h5 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
 }
-.proditm img {
-  padding-top: 3%;
-  height: 70%;
-  width: 60%;
-  margin-left: 15%;
+.proditm .thumbNail {
+  width: 100%;
+  height: 200px;
+  margin: 0;
+  padding: 0;
 }
 
 .proditmflex {
   display: flex;
   gap: 10px;
   align-items: center;
-  margin-left: 4%;
-  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 .proditmflex button {
   background-color: #eb6d20;
   width: 30%;
   height: 20px;
   color: #fff;
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -349,7 +338,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 .proditmflex h6 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -358,7 +346,6 @@ body::-webkit-scrollbar-thumb {
   margin-left: 10%;
 }
 .lsttxt {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -382,7 +369,6 @@ body::-webkit-scrollbar-thumb {
   width: 100%;
 }
 .rentcont h3 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 30px;
@@ -408,7 +394,6 @@ body::-webkit-scrollbar-thumb {
   height: 80%;
 }
 .rentitem p {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 40px;
@@ -470,7 +455,6 @@ body::-webkit-scrollbar-thumb {
   width: 30%;
 }
 .cartcont2r h6 {
-  font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -491,7 +475,6 @@ body::-webkit-scrollbar-thumb {
   margin-left: 5px;
 }
 .cartprodr h6 {
-  font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -578,7 +561,6 @@ body::-webkit-scrollbar-thumb {
   gap: 20px;
 }
 .mobileviewdetail h6 {
-  font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -627,7 +609,6 @@ body::-webkit-scrollbar-thumb {
   margin-left: 30px;
 }
 .mobileviewcont2r2 h4 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -642,7 +623,6 @@ body::-webkit-scrollbar-thumb {
   justify-content: space-between;
 }
 .flex1 h3 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -667,7 +647,7 @@ body::-webkit-scrollbar-thumb {
 }
 .flex2l h6 {
   color: #f3903f;
-  font-family: "Roboto";
+
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -684,7 +664,7 @@ body::-webkit-scrollbar-thumb {
 }
 .flex2lc h6 {
   color: #f3903f;
-  font-family: "Roboto";
+
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -705,7 +685,6 @@ body::-webkit-scrollbar-thumb {
   flex-direction: column;
 }
 .flex2ritem h4 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -714,7 +693,6 @@ body::-webkit-scrollbar-thumb {
   color: #000000;
 }
 .flex2ritem h5 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -729,7 +707,6 @@ body::-webkit-scrollbar-thumb {
   background-color: #fff;
 }
 .mobileviewcont3 h3 {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -771,7 +748,6 @@ body::-webkit-scrollbar-thumb {
   padding-top: 5px;
 }
 .caruselItem p {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -792,7 +768,6 @@ body::-webkit-scrollbar-thumb {
   padding-top: 10px;
 }
 .hometopitm2 p {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -1192,7 +1167,6 @@ body::-webkit-scrollbar-thumb {
   gap: 10px;
 }
 .three-sec .left .second .head {
-  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 20px;

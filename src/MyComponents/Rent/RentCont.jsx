@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Table, Modal, Form, Button, Alert } from "react-bootstrap";
 import axios from "axios";
+import Baseurl from "../../Baseurl";
 
 const ReactCont = () => {
   const [landlord, setLandlord] = useState(false);
@@ -13,6 +14,56 @@ const ReactCont = () => {
   const [school, setSchool] = useState(false);
   // data information
   const [data, setData] = useState("");
+
+  //pay rent
+  const createOrderHandler = async (cartDetails) => {
+    let url = `${Baseurl()}api/v1/orders`;
+    try {
+      const body = { address: "123 street" };
+      const config = {
+        headers: {
+          Token: `${localStorage.getItem("boon")}`,
+        },
+      };
+      config.headers["Authorization-Type"] = "Bearer Token";
+
+      const res = await axios.post(url, body, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("boon")}`,
+        },
+      });
+
+      console.log("order id is print", res.data.orderId);
+
+      const options = {
+        key: "rzp_test_JLYSrkvFXSpSQv",
+        amount: cartDetails.totalAmount * 100,
+        currency: "INR",
+        name: cartDetails.title,
+        description: "Tutorial of RazorPay",
+        image: cartDetails?.productimage?.[0],
+        handler: function (response) {
+          // alert("Payment Done");
+          window.location.href = `/payment/successfullpage/${res.data.orderId}`;
+        },
+        prefill: {
+          name: "Gaurav Kumar",
+          email: "gaurav.kumar@example.com",
+          contact: "9999999999",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#121212",
+        },
+      };
+      const razor = new window.Razorpay(options);
+      razor.open();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Post model
   function MyVerticallyCenteredModallandlord(props) {
@@ -202,6 +253,7 @@ const ReactCont = () => {
               }}
               type="submit"
               id="mobile_rent_buttons"
+              onClick={() => createOrderHandler()}
             >
               Submit
             </Button>
@@ -210,11 +262,6 @@ const ReactCont = () => {
       </Modal>
     );
   }
-
-  const handleData = (temp) => {
-    setData(temp);
-    setTuition(true);
-  };
 
   function MyVerticallyCenteredModaltuition(props) {
     const [name, setName] = useState("");
@@ -399,6 +446,7 @@ const ReactCont = () => {
                 },
               }}
               type="submit"
+              onClick={() => createOrderHandler()}
             >
               Submit
             </Button>
@@ -449,6 +497,55 @@ const ReactCont = () => {
           }
         );
         console.log("Data is create successfully", res.data);
+        const createOrderHandler = async () => {
+          let url = `${Baseurl()}api/v1/orders`;
+          try {
+            const body = { address: "123 street" };
+            const config = {
+              headers: {
+                Token: `${localStorage.getItem("boon")}`,
+              },
+            };
+            config.headers["Authorization-Type"] = "Bearer Token";
+
+            const res = await axios.post(url, body, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("boon")}`,
+              },
+            });
+
+            console.log("order id is print", res.data.orderId);
+
+            const options = {
+              key: "rzp_test_JLYSrkvFXSpSQv",
+              amount: payment * 100,
+              currency: "INR",
+              // name: cartDetails.title,
+              description: "Tutorial of RazorPay",
+              // image: cartDetails?.productimage?.[0],
+              handler: function (response) {
+                // alert("Payment Done");
+                window.location.href = `/payment/successfullpage/${res.data.orderId}`;
+              },
+              prefill: {
+                name: "Gaurav Kumar",
+                email: "gaurav.kumar@example.com",
+                contact: "9999999999",
+              },
+              notes: {
+                address: "Razorpay Corporate Office",
+              },
+              theme: {
+                color: "#121212",
+              },
+            };
+            const razor = new window.Razorpay(options);
+            razor.open();
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        createOrderHandler();
         toast("Data is create successfully", {
           position: toast.POSITION.TOP_CENTER,
         });
@@ -591,6 +688,7 @@ const ReactCont = () => {
                 },
               }}
               type="submit"
+              onClick={() => createOrderHandler()}
             >
               Submit
             </Button>
@@ -783,6 +881,7 @@ const ReactCont = () => {
                 },
               }}
               type="submit"
+              onClick={() => createOrderHandler()}
             >
               Submit
             </Button>
@@ -975,6 +1074,7 @@ const ReactCont = () => {
                 },
               }}
               type="submit"
+              onClick={() => createOrderHandler()}
             >
               Submit
             </Button>
