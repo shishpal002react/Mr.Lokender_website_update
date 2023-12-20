@@ -13,35 +13,21 @@ const SingleProductView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem("boon");
-  // const data = location.state;
   const [rev, setReview] = useState("");
-  //   const [pop, setPop] = useState(false);
-
-  //   Add
-  // const addCart = async (id) => {
-  //   let url = `${Baseurl()}api/v1/cart`;
-  //   const payload = {
-  //     product: id,
-  //   };
-  //   try {
-  //     const res = await axios.post(url, payload, {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     console.log("post request cart" ,res);
-  //     toast.success("SuccessFully ! Added to cart");
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error("Internal Server Error");
-  //   }
-  //   navigate("/cart")
-  // };
+  const [colorId, setColorId] = useState("");
+  const [sizeId, setSizeId] = useState("");
+  const [img, setImg] = useState("");
 
   // add to cart
   const addToCartHandler = async () => {
-    console.log("add to cart clicked");
     let url = `${Baseurl()}api/v1/cart`;
     try {
-      const body = { productId: id, quantity: 1 };
+      const body = {
+        productId: id,
+        quantity: 1,
+        sizeId: sizeId,
+        colorId: colorId,
+      };
       const res = await axios.post(url, body, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
@@ -81,6 +67,7 @@ const SingleProductView = () => {
 
   //Same categary data api call
   const [categaryData, setCategaryData] = useState([]);
+
   const getCategaryProducts = async () => {
     console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/product/${id}`;
@@ -90,10 +77,6 @@ const SingleProductView = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log(
-        "product from categary in single golu section",
-        res.data.products
-      );
       setCategaryData(res?.data?.products);
     } catch (error) {
       console.log(error);
@@ -107,7 +90,6 @@ const SingleProductView = () => {
   ///single data api and  get all products
   const [singleData, setSingleData] = useState("");
   const getSingleProducts = async () => {
-    console.log("ls", localStorage.getItem("boon"));
     let url = `${Baseurl()}api/v1/product/single/${id}`;
     try {
       const res = await axios.get(url, {
@@ -115,8 +97,9 @@ const SingleProductView = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("product from product section", res.data.product);
-      setSingleData(res.data.product);
+      const data = res.data.product;
+      setSingleData(data);
+      setImg(data?.images[0]);
     } catch (error) {
       console.log(error);
     }
@@ -124,7 +107,7 @@ const SingleProductView = () => {
 
   useEffect(() => {
     getSingleProducts();
-  }, []);
+  }, [id]);
 
   return (
     <>
@@ -135,26 +118,20 @@ const SingleProductView = () => {
           <div className="singlecont">
             <div className="singlecontl">
               {singleData?.images?.slice(0, 4)?.map((item, i) => (
-                <div className="singleitem">
+                <div className="singleitem" onClick={() => setImg(item)}>
                   <img src={item} key={i} alt="image not found" />
                 </div>
               ))}
             </div>
             <div className="singlecontr">
               <div className="mobileimg">
-                <img src={singleData?.images?.[0]} alt="image not found" />
+                <img src={img} alt="ImageNotFound" />
               </div>
               <div className="mobilebtn">
-                <button
-                  className="bt1"
-                  onClick={() => addToCartHandler(singleData._id)}
-                >
+                <button className="bt1" onClick={() => addToCartHandler()}>
                   Add To Cart
                 </button>
-                <button
-                  className="bt2"
-                  onClick={() => handleAddProduct(singleData._id)}
-                >
+                <button className="bt2" onClick={() => handleAddProduct()}>
                   Buy Now
                 </button>
               </div>
@@ -163,32 +140,76 @@ const SingleProductView = () => {
         </div>
         <div className="mobileviewcontr">
           <div className="mobileviewdetail">
+            <h6>{singleData?.name}</h6>
+            <h6>Product MRP : {singleData?.mrp}</h6>
             <h6>
-              {singleData.name} (
-              {singleData?.color?.map((item, i) => (
-                <span key={i}>{item},</span>
-              ))}
-              )
+              Product Price : <del>{singleData?.price}</del>
             </h6>
-            <h6>Extra &#x20B9;{singleData?.discountAmount}off</h6>
-            <div className="detaillst">
-              <h6>
-                &#x20B9; {singleData.price} &#x20B9;{singleData.discountAmount}{" "}
-                off
-              </h6>
+            <h6>Extra Save &#x20B9; {singleData?.discountAmount} off</h6>
+            <h6>
+              Product Discount &#x20B9; {singleData?.discountPercent} % off
+            </h6>
+            <div>
+              <div className="product_image_size_parent">
+                <p>Color : </p>
+                {singleData?.colors?.slice(0, 5)?.map((item) => (
+                  <div
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      margin: "15px",
+                      textAlign: "center",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setColorId(item?._id);
+                      setImg(item?.image);
+                    }}
+                  >
+                    <img
+                      src={item?.image}
+                      alt=""
+                      style={{ objectFit: "cover" }}
+                    />
+                    <p>{item?.name}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="product_image_size_parent">
+                <p>Sizes : </p>
+                {singleData?.sizePrice?.slice(0, 5)?.map((item) => (
+                  <div
+                    style={{
+                      width: "100px",
+                      height: "50px",
+                      margin: "15px",
+                      textAlign: "center",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setSizeId(item._id)}
+                  >
+                    <button type="button">{item?.size}</button>
+                  </div>
+                ))}
+              </div>
             </div>
-            <h6>+&#x20B9; 29 Packaging Charges</h6>
-            {singleData?.features?.map((item, i) => (
-              <h6 key={i}>{item}</h6>
-            ))}
-            {/* <h6>Banking Offers 3000 lorem ipsum hiwbqef kjeqdv d</h6>
-            <h6>Banking Offers 3000 lorem ipsum hiwbqef kjeqdv d</h6>
-            <h6>Banking Offers 3000 lorem ipsum hiwbqef kjeqdv d</h6>
-            <h6>Banking Offers 3000 lorem ipsum hiwbqef kjeqdv d</h6>
-            <h6>Banking Offers 3000 lorem ipsum hiwbqef kjeqdv d</h6>
-            <h6>Banking Offers 3000 lorem ipsum hiwbqef kjeqdv d</h6>
-            <h6>Banking Offers 3000 lorem ipsum hiwbqef kjeqdv d</h6>
-            <h6>Banking Offers 3000 lorem ipsum hiwbqef kjeqdv d</h6> */}
+
+            <div className="detaillst">
+              <h6>&#x20B9; {singleData?.offerPrice}</h6>
+            </div>
+
+            <div className="displayFlex">
+              <h6>Product Feature : </h6>
+              {singleData?.features?.map((item, i) => (
+                <h6 key={i} style={{ marginLeft: "5px" }}>
+                  {item}
+                </h6>
+              ))}
+            </div>
+            <div className="displayFlex">
+              <h6>Product Description :</h6>
+              <p>{singleData?.description}</p>
+            </div>
             <div className="mobileviewdetailbtn">
               <div></div>
               <button className="btt">Check Delivery</button>
@@ -217,10 +238,6 @@ const SingleProductView = () => {
                 <h6>{singleData.ratings}</h6>
               </div>
               <div className="flex2r">
-                {/* <div className="flex2ritem">
-                  <h4>2</h4>
-                  <h5>Followers</h5>
-                </div> */}
                 <div className="flex2ritem">
                   <h4>{singleData?.stock}</h4>
                   <h5>Products</h5>

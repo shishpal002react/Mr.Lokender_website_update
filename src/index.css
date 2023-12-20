@@ -616,6 +616,24 @@ body::-webkit-scrollbar-thumb {
   color: #000000;
 }
 
+/* single page css */
+.displayFlex {
+  display: flex;
+}
+.product_image_size_parent {
+  display: flex;
+  margin: 2%;
+}
+@media (max-width: 400px) {
+  .displayFlex {
+    display: block;
+  }
+  .product_image_size_parent {
+    display: block;
+    margin: 4%;
+  }
+}
+
 .flex1 {
   margin-top: 4%;
   display: flex;
