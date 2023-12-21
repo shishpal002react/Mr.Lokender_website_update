@@ -27,7 +27,7 @@ const Orders = () => {
       });
 
       console.log("order data after api calling", res.data);
-      setOrders(res.data);
+      setOrders(res.data.reverse());
       console.log("order data after api calling", orders);
     } catch (error) {
       console.log(error);
@@ -51,7 +51,7 @@ const Orders = () => {
           {orders.length !== 0 ? (
             <div className="cartcont2">
               <div className="cartcont2l">
-                {orders?.slice(0, 3)?.map((item, i) => {
+                {orders?.map((item, i) => {
                   return (
                     <>
                       <div
@@ -69,9 +69,7 @@ const Orders = () => {
                           <div>
                             {item.products?.map((p) => (
                               <div className="cartprodr">
-                                {/* <h6>Product Price: {item.price}</h6> */}
                                 <p>Quantity: {p?.quantity}</p>
-                                {/* <p>Seller: {product.sellerId}</p> */}
 
                                 <p> &#x20b9; {p?.price}</p>
                                 <hr style={{ color: "black" }}></hr>
@@ -80,7 +78,8 @@ const Orders = () => {
                           </div>
                           <div className="cartcont2r">
                             <h6>Total Amount : &#x20b9; {item?.totalAmount}</h6>
-                            <p>Product Status: {item?.status}</p>
+                            <p>Order Status: {item?.orderStatus}</p>
+                            <p>Payment Status: {item?.paymentStatus}</p>
                           </div>
                         </div>
                       </div>

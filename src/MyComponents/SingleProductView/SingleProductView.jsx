@@ -99,7 +99,7 @@ const SingleProductView = () => {
       });
       const data = res.data.product;
       setSingleData(data);
-      setImg(data?.images[0]);
+      setImg(data?.images[0]?.image);
     } catch (error) {
       console.log(error);
     }
@@ -119,7 +119,7 @@ const SingleProductView = () => {
             <div className="singlecontl">
               {singleData?.images?.slice(0, 4)?.map((item, i) => (
                 <div className="singleitem" onClick={() => setImg(item)}>
-                  <img src={item} key={i} alt="image not found" />
+                  <img src={item?.image} key={i} alt="image not found" />
                 </div>
               ))}
             </div>

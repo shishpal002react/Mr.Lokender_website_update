@@ -63,7 +63,7 @@ const ProductSection = () => {
         },
       });
       console.log("product from product section", res.data.products);
-      setProducts(res.data.products);
+      setProducts(res.data.products.reverse());
     } catch (error) {
       console.log(error);
     }
@@ -185,7 +185,7 @@ const ProductSection = () => {
                               // navigate(`/categoryproducts/${product._id}`);
                               navigate(`/singleprodoctview/${product._id}`);
                             }}
-                            src={product.images[0]}
+                            src={product.images[0]?.image}
                             alt=""
                             className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
                           />
@@ -366,7 +366,7 @@ const ProductSection = () => {
                           // navigate(`/categoryproducts/${product._id}`);
                           navigate(`/singleprodoctview/${product._id}`);
                         }}
-                        src={product.images[0]}
+                        src={product.images[0]?.image}
                         alt=""
                         className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
                       />
@@ -530,7 +530,7 @@ const ProductSection = () => {
                               // navigate(`/categoryproducts/${product._id}`);
                               navigate(`/singleprodoctview/${product._id}`);
                             }}
-                            src={product.images[0]}
+                            src={product.images[0]?.image}
                             alt=""
                             className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
                           />
@@ -719,7 +719,7 @@ const ProductSection = () => {
                               // navigate(`/categoryproducts/${product._id}`);
                               navigate(`/singleprodoctview/${product._id}`);
                             }}
-                            src={product.images[0]}
+                            src={product.images[0]?.image}
                             alt=""
                             className="h-44 cursor-pointer mx-auto flex flex-col items-center  object-cover overflow-hidden"
                           />
