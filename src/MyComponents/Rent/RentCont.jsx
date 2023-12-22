@@ -15,36 +15,21 @@ const ReactCont = () => {
   // data information
   const [data, setData] = useState("");
 
-  //pay rent
+  //payment api
+  // const createOrderHandler = async () => {
   const createOrderHandler = async (cartDetails) => {
-    let url = `${Baseurl()}api/v1/orders`;
     try {
-      const body = { address: "123 street" };
-      const config = {
-        headers: {
-          Token: `${localStorage.getItem("boon")}`,
-        },
-      };
-      config.headers["Authorization-Type"] = "Bearer Token";
-
-      const res = await axios.post(url, body, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("boon")}`,
-        },
-      });
-
-      console.log("order id is print", res.data.orderId);
-
       const options = {
         key: "rzp_test_JLYSrkvFXSpSQv",
-        amount: cartDetails.totalAmount * 100,
+        // amount: cartDetails.totalAmount * 100,
+        amount: 100 * 100,
         currency: "INR",
-        name: cartDetails.title,
+        // name: cartDetails.title,
         description: "Tutorial of RazorPay",
-        image: cartDetails?.productimage?.[0],
+        image: "https://example.com/your_logo",
         handler: function (response) {
           // alert("Payment Done");
-          window.location.href = `/payment/successfullpage/${res.data.orderId}`;
+          window.location.href = `/payment/payRentsuccessfullpage/${cartDetails._id}`;
         },
         prefill: {
           name: "Gaurav Kumar",
@@ -108,13 +93,14 @@ const ReactCont = () => {
             },
           }
         );
-        toast("Data is create successfully", {
+        toast("Data is save successfully", {
           position: toast.POSITION.TOP_CENTER,
         });
         setLandlord(false);
+        createOrderHandler(res?.data?.rentPayment);
       } catch (error) {
         toast(error.response.data.message, {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
       }
     };
@@ -253,7 +239,6 @@ const ReactCont = () => {
               }}
               type="submit"
               id="mobile_rent_buttons"
-              onClick={() => createOrderHandler()}
             >
               Submit
             </Button>
@@ -308,9 +293,10 @@ const ReactCont = () => {
           position: toast.POSITION.TOP_CENTER,
         });
         setTuition(false);
+        createOrderHandler(res?.data?.rentPayment);
       } catch (error) {
         toast(error.response.data.message, {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
       }
     };
@@ -446,7 +432,6 @@ const ReactCont = () => {
                 },
               }}
               type="submit"
-              onClick={() => createOrderHandler()}
             >
               Submit
             </Button>
@@ -497,62 +482,15 @@ const ReactCont = () => {
           }
         );
         console.log("Data is create successfully", res.data);
-        const createOrderHandler = async () => {
-          let url = `${Baseurl()}api/v1/orders`;
-          try {
-            const body = { address: "123 street" };
-            const config = {
-              headers: {
-                Token: `${localStorage.getItem("boon")}`,
-              },
-            };
-            config.headers["Authorization-Type"] = "Bearer Token";
-
-            const res = await axios.post(url, body, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("boon")}`,
-              },
-            });
-
-            console.log("order id is print", res.data.orderId);
-
-            const options = {
-              key: "rzp_test_JLYSrkvFXSpSQv",
-              amount: payment * 100,
-              currency: "INR",
-              // name: cartDetails.title,
-              description: "Tutorial of RazorPay",
-              // image: cartDetails?.productimage?.[0],
-              handler: function (response) {
-                // alert("Payment Done");
-                window.location.href = `/payment/successfullpage/${res.data.orderId}`;
-              },
-              prefill: {
-                name: "Gaurav Kumar",
-                email: "gaurav.kumar@example.com",
-                contact: "9999999999",
-              },
-              notes: {
-                address: "Razorpay Corporate Office",
-              },
-              theme: {
-                color: "#121212",
-              },
-            };
-            const razor = new window.Razorpay(options);
-            razor.open();
-          } catch (error) {
-            console.log(error);
-          }
-        };
         createOrderHandler();
         toast("Data is create successfully", {
           position: toast.POSITION.TOP_CENTER,
         });
         setSociety(false);
+        createOrderHandler(res?.data?.rentPayment);
       } catch (error) {
         toast(error.response.data.message, {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
       }
     };
@@ -743,9 +681,10 @@ const ReactCont = () => {
           position: toast.POSITION.TOP_CENTER,
         });
         setOffice(false);
+        createOrderHandler(res?.data?.rentPayment);
       } catch (error) {
         toast(error.response.data.message, {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
       }
     };
@@ -936,9 +875,10 @@ const ReactCont = () => {
           position: toast.POSITION.TOP_CENTER,
         });
         setSchool(false);
+        createOrderHandler(res?.data?.rentPayment);
       } catch (error) {
         toast(error.response.data.message, {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
       }
     };

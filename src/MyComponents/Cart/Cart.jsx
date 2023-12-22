@@ -12,8 +12,8 @@ import axios from "axios";
 import { TbTruckDelivery } from "react-icons/tb";
 import img from "../../Images/d42.png";
 import { toast } from "react-toastify";
-// import Razorpay1 from "./Razorpay1";
 
+// import Razorpay1 from "./Razorpay1";
 const Cart = () => {
   const [pop, setPop] = useState(false);
   const [cartProducts, setCartProducts] = useState([]);
@@ -86,8 +86,6 @@ const Cart = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-
-      console.log("order id is print", res.data.orderId);
 
       const options = {
         key: "rzp_test_JLYSrkvFXSpSQv",

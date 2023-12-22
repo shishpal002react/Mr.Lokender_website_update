@@ -78,8 +78,10 @@ const SingleProductView = () => {
         },
       });
       setCategaryData(res?.data?.products);
+      console.log(res, "some changes category by id");
     } catch (error) {
       console.log(error);
+      console.log("some changes  errrrrro category by id");
     }
   };
 
@@ -118,7 +120,7 @@ const SingleProductView = () => {
           <div className="singlecont">
             <div className="singlecontl">
               {singleData?.images?.slice(0, 4)?.map((item, i) => (
-                <div className="singleitem" onClick={() => setImg(item)}>
+                <div className="singleitem" onClick={() => setImg(item?.image)}>
                   <img src={item?.image} key={i} alt="image not found" />
                 </div>
               ))}
@@ -250,11 +252,15 @@ const SingleProductView = () => {
       <div className="mobileviewcont3">
         <h3>You might be Interested in </h3>
         <div className="flex3">
-          {categaryData.map((item, i) => (
-            <div className="boxitm">
+          {categaryData?.map((item, i) => (
+            <div
+              style={{ cursor: "pointer" }}
+              className="boxitm"
+              onClick={() => navigate(`/singleprodoctview/${item?._id}`)}
+            >
               <img
                 style={{ margin: "10% 2%", width: "90%" }}
-                src={item?.images?.[0]}
+                src={item?.images?.[0]?.image}
                 alt="image is not found"
               />
             </div>

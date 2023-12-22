@@ -57,6 +57,7 @@ import Terms_Condition from "./MyComponents/Homepage/Footer/FotterPage/Terms_Con
 import Trucks_Exchange from "./MyComponents/Homepage/Footer/FotterPage/Trucks_Exchange";
 import About from "./MyComponents/Homepage/Footer/FotterPage/About";
 import Track_Order from "./MyComponents/Homepage/Footer/FotterPage/Track_Order";
+import PayRentSucessfullPage from "./MyComponents/PaymentSuccessfulPage/PayRentSucessfullPage";
 
 const App = () => {
   return (
@@ -103,6 +104,10 @@ const App = () => {
         <Route
           path="/payment/successfullpage/:id"
           element={<PaymentSuccessfulPage />}
+        />
+        <Route
+          path="/payment/payRentsuccessfullpage/:id"
+          element={<PayRentSucessfullPage />}
         />
         <Route path="/couponpage" element={<Coupon />} />
         <Route path="/notification-page" element={<Notification />} />
