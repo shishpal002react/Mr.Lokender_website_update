@@ -153,13 +153,15 @@ const SingleProductView = () => {
             </h6>
             <div>
               <div className="product_image_size_parent">
-                <p>Color : </p>
-                {singleData?.colors?.slice(0, 5)?.map((item) => (
+                <span style={{ fontWeight: "bold" }}>Color :</span>
+
+                {singleData?.colors?.map((item) => (
                   <div
                     style={{
                       width: "100px",
                       height: "100px",
-                      margin: "15px",
+                      marginRight: "15px",
+                      marginLeft: "15px",
                       textAlign: "center",
                       cursor: "pointer",
                     }}
@@ -168,29 +170,35 @@ const SingleProductView = () => {
                       setImg(item?.image);
                     }}
                   >
-                    <img
-                      src={item?.image}
-                      alt=""
-                      style={{ objectFit: "cover" }}
-                    />
-                    <p>{item?.name}</p>
+                    <div className="single_image_container">
+                      <p className="single_image_name_hover">{item?.name}</p>
+                      <img
+                        className="image_with_Color"
+                        src={item?.images?.[0]}
+                        alt=""
+                        style={{ objectFit: "cover" }}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
-              <div className="product_image_size_parent">
-                <p>Sizes : </p>
-                {singleData?.sizePrice?.slice(0, 5)?.map((item) => (
+              <div className="product_image_size_parent_sizes">
+                <span style={{ fontWeight: "bold" }}>Sizes :</span>
+                {singleData?.sizePrice?.map((item) => (
                   <div
                     style={{
                       width: "100px",
                       height: "50px",
-                      margin: "15px",
+                      marginRight: "15px",
+                      marginLeft: "15px",
                       textAlign: "center",
                       cursor: "pointer",
                     }}
                     onClick={() => setSizeId(item._id)}
                   >
-                    <button type="button">{item?.size}</button>
+                    <button type="button" className="size_button">
+                      {item?.size}
+                    </button>
                   </div>
                 ))}
               </div>

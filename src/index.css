@@ -623,7 +623,65 @@ body::-webkit-scrollbar-thumb {
 .product_image_size_parent {
   display: flex;
   margin: 2%;
+  width: 100%;
 }
+
+.product_image_size_parent_sizes {
+  display: flex;
+  margin: 4%;
+  margin-top: 15%;
+  flex-wrap: nowrap;
+}
+.size_button {
+  border: rgb(93, 88, 88);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.image_with_Color:hover {
+  scale: 1.1;
+  transition: 0.5s;
+}
+
+.size_button:hover {
+  scale: 2;
+  transition: 0.2s;
+  background-color: rgb(137, 132, 132);
+}
+
+/* CSS */
+.single_image_container {
+  position: relative;
+  /* overflow: hidden; */
+  margin-top: 20px;
+}
+
+.single_image_name_hover {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  color: white; /* Set your desired text color */
+  font-size: 16px; /* Set your desired font size */
+  font-weight: bold; /* Set your desired font weight */
+  text-align: center;
+  padding: 10px; /* Adjust padding as needed */
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease-in-out;
+}
+
+.single_image_container:hover .single_image_name_hover {
+  opacity: 1; /* Show on hover */
+}
+
 @media (max-width: 400px) {
   .displayFlex {
     display: block;
@@ -631,6 +689,11 @@ body::-webkit-scrollbar-thumb {
   .product_image_size_parent {
     display: block;
     margin: 4%;
+  }
+  .product_image_size_parent_sizes {
+    display: block;
+    margin: 4%;
+    margin-top: 10%;
   }
 }
 
