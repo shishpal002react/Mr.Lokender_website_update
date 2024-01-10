@@ -263,26 +263,10 @@ const Cart = () => {
                     <h6>Deliverd Expected Date {product?.expectedDate}</h6>
                     <p>7 Days Replacement Policy</p>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        marginRight: "90px",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        alignContent: "center",
-                        border: "1px solid black",
-                        borderRadius: "10px",
-                        marginTop: "5px",
-                      }}
-                    >
+                    <div className="cart_button">
                       <button
                         type="button"
-                        style={{
-                          fontSize: "25px",
-                          fontWeight: "700",
-                          cursor: "pointer",
-                          paddingLeft: "20px",
-                        }}
+                        className="cart_increase"
                         onClick={() => inc(product?.productId?._id)}
                       >
                         <AiFillPlusCircle />
@@ -298,13 +282,7 @@ const Cart = () => {
                       </p>
                       <button
                         type="button"
-                        style={{
-                          fontSize: "25px",
-                          fontWeight: "700",
-                          cursor: "pointer",
-                          paddingRight: "25px",
-                          marginLeft: "2px",
-                        }}
+                        className="cart_reduce"
                         onClick={() => dec(product?.productId?._id)}
                       >
                         <AiFillMinusCircle />
