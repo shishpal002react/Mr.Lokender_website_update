@@ -17,6 +17,7 @@ const SingleProductView = () => {
   const [colorId, setColorId] = useState("");
   const [sizeId, setSizeId] = useState("");
   const [img, setImg] = useState("");
+  const [imagesArray, setImageArray] = useState([]);
 
   // add to cart
   const addToCartHandler = async () => {
@@ -33,7 +34,7 @@ const SingleProductView = () => {
           Authorization: `Bearer ${localStorage.getItem("boon")}`,
         },
       });
-      console.log("cart response", res);
+
       toast.success("Added to Cart");
     } catch (error) {
       console.log(error);
@@ -56,12 +57,10 @@ const SingleProductView = () => {
       const res = await axios.post(url, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(res);
       setReview("");
       toast.success("Thank you for review ", { autoClose: 500 });
     } catch (error) {
       console.log(error);
-      console.log("Internal Server Error");
     }
   };
 
@@ -78,10 +77,8 @@ const SingleProductView = () => {
         },
       });
       setCategaryData(res?.data?.products);
-      console.log(res, "some changes category by id");
     } catch (error) {
       console.log(error);
-      console.log("some changes  errrrrro category by id");
     }
   };
 
@@ -119,11 +116,25 @@ const SingleProductView = () => {
         <div className="mobileviewcontl">
           <div className="singlecont">
             <div className="singlecontl">
-              {singleData?.images?.slice(0, 4)?.map((item, i) => (
-                <div className="singleitem" onClick={() => setImg(item?.image)}>
-                  <img src={item?.image} key={i} alt="image not found" />
-                </div>
-              ))}
+              {imagesArray && imagesArray.length > 0
+                ? imagesArray?.slice(0, 4)?.map((item, i) => (
+                    <div
+                      className="singleitem"
+                      onClick={() => setImg(item)}
+                      key={i}
+                    >
+                      <img src={item} alt="image not found" />
+                    </div>
+                  ))
+                : singleData?.images?.slice(0, 4)?.map((item, i) => (
+                    <div
+                      className="singleitem"
+                      onClick={() => setImg(item?.image)}
+                      key={i}
+                    >
+                      <img src={item?.image} alt="image not found" />
+                    </div>
+                  ))}
             </div>
             <div className="singlecontr">
               <div className="mobileimg">
@@ -153,21 +164,27 @@ const SingleProductView = () => {
             </h6>
             <div>
               <div className="product_image_size_parent">
-                <span style={{ fontWeight: "bold" }}>Color :</span>
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    marginTop: "30px",
+                    marginRight: "5px",
+                  }}
+                >
+                  Color :
+                </span>
 
                 {singleData?.colors?.map((item) => (
                   <div
                     style={{
-                      width: "100px",
-                      height: "100px",
-                      marginRight: "15px",
-                      marginLeft: "15px",
+                      margin: "5px",
                       textAlign: "center",
                       cursor: "pointer",
                     }}
                     onClick={() => {
                       setColorId(item?._id);
-                      setImg(item?.image);
+                      setImg(item?.images?.[0]);
+                      setImageArray(item?.images);
                     }}
                   >
                     <div className="single_image_container">
@@ -183,16 +200,17 @@ const SingleProductView = () => {
                 ))}
               </div>
               <div className="product_image_size_parent_sizes">
-                <span style={{ fontWeight: "bold" }}>Sizes :</span>
+                <span style={{ fontWeight: "bold", marginRight: "15px" }}>
+                  Sizes :
+                </span>
                 {singleData?.sizePrice?.map((item) => (
                   <div
                     style={{
-                      width: "100px",
-                      height: "50px",
-                      marginRight: "15px",
-                      marginLeft: "15px",
-                      textAlign: "center",
+                      width: "50px",
+                      display: "flex",
+                      alignItems: "center",
                       cursor: "pointer",
+                      flexWrap: "nowrap",
                     }}
                     onClick={() => setSizeId(item._id)}
                   >

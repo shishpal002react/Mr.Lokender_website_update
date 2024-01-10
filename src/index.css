@@ -526,15 +526,15 @@ body::-webkit-scrollbar-thumb {
 .singleitem img {
   width: 100%;
   height: 100px;
-  padding: 2%;
+  padding: 4%;
   align-items: center;
 }
-.mobileimg {
-  border: 1px solid #959595;
-}
+
 .mobileimg img {
-  padding: 2%;
+  padding: 10px;
   height: 410px;
+  border: 1px solid #959595;
+  object-fit: cover;
 }
 .mobilebtn {
   margin-top: 4%;
@@ -622,14 +622,14 @@ body::-webkit-scrollbar-thumb {
 }
 .product_image_size_parent {
   display: flex;
-  margin: 2%;
   width: 100%;
+  margin-top: 2%;
+  flex-wrap: nowrap;
 }
 
 .product_image_size_parent_sizes {
   display: flex;
-  margin: 4%;
-  margin-top: 15%;
+  margin-top: 5%;
   flex-wrap: nowrap;
 }
 .size_button {
@@ -645,6 +645,10 @@ body::-webkit-scrollbar-thumb {
   font-weight: bold;
   text-transform: capitalize;
 }
+.image_with_Color {
+  width: 50px;
+}
+
 .image_with_Color:hover {
   scale: 1.1;
   transition: 0.5s;
@@ -660,12 +664,12 @@ body::-webkit-scrollbar-thumb {
 .single_image_container {
   position: relative;
   /* overflow: hidden; */
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .single_image_name_hover {
   position: absolute;
-  top: -50px;
+  top: -60px;
   left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
@@ -673,7 +677,7 @@ body::-webkit-scrollbar-thumb {
   font-size: 16px; /* Set your desired font size */
   font-weight: bold; /* Set your desired font weight */
   text-align: center;
-  padding: 10px; /* Adjust padding as needed */
+  padding: 2px; /* Adjust padding as needed */
   opacity: 0; /* Initially hidden */
   transition: opacity 0.3s ease-in-out;
 }

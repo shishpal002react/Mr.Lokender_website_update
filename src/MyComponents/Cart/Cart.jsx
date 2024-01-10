@@ -215,13 +215,18 @@ const Cart = () => {
                   <div className="cartcont2l">
                     <div className="cartprod">
                       <div className="cartprodl">
-                        <img src={product?.productId?.images?.[0]} alt="" />
+                        <img
+                          src={product?.productId?.images?.[0]?.image}
+                          alt=""
+                        />
                       </div>
                       <div className="cartprodr">
                         <h6>Product Name: {product?.productId?.name}</h6>
-                        <p>
-                          Product color detail:{" "}
-                          {product?.productId?.color?.join(",")}
+                        <p style={{ fontSize: "16px", fontWeight: "bold" }}>
+                          Product color detail: {product?.sizeDetails?.color}
+                        </p>
+                        <p style={{ fontSize: "16px", fontWeight: "bold" }}>
+                          Product size detail: {product?.sizeDetails?.size}
                         </p>
                         <p>
                           Price: {product?.name} &#x20b9;{" "}
@@ -264,6 +269,7 @@ const Cart = () => {
                         marginRight: "90px",
                         justifyContent: "space-between",
                         alignItems: "center",
+                        alignContent: "center",
                         border: "1px solid black",
                         borderRadius: "10px",
                         marginTop: "5px",
@@ -283,10 +289,9 @@ const Cart = () => {
                       </button>
                       <p
                         style={{
-                          borderLeft: "1px solid black",
-                          borderRight: "1px solid black",
                           paddingLeft: "12px",
                           paddingRight: "12px",
+                          height: "auto",
                         }}
                       >
                         {product?.quantity}
