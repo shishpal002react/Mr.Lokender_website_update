@@ -5,7 +5,9 @@ import {
   FaLinkedin,
   FaTwitter,
   FaArrowUp,
+
 } from "react-icons/fa";
+
 import { useNavigate } from "react-router-dom";
 import logo from "../../../Images/d52.png";
 import img from "../../../Images/d54.png";
@@ -24,7 +26,7 @@ const Footer = () => {
   //category
   const [categary, setCategory] = useState([]);
   const allCategary = async () => {
-    console.log("ls", localStorage.getItem("boon"));
+  
     let url = `${Baseurl()}api/v1/admin/allCategory`;
     try {
       const res = await axios.get(url, {
@@ -72,6 +74,7 @@ const Footer = () => {
       console.log(error);
     }
   };
+
   //cat-subcategory_data
   const [catSubWiseData, setatSubWiseData] = useState([]);
   const getCatSubProducts = async () => {
@@ -89,11 +92,29 @@ const Footer = () => {
     }
   };
 
+    // get all contect Detail
+    const [contect, setContect] = useState([]);
+    const getContect = async () => {
+      let url = `${Baseurl()}api/v1/admin/ContactDetails/viewContactDetails`;
+      try {
+        const res = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("boon")}`,
+          },
+        });
+        setContect(res.data.data);
+        console.log("contect data",res.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
   useEffect(() => {
     allCategary();
     getFooterData();
     getProducts();
     getCatSubProducts();
+    getContect()
   }, []);
 
   return (
@@ -468,7 +489,7 @@ const Footer = () => {
           Terms and conditions apply.
         </p> */}
       </p>
-      <div className="container-fluid flex gap-15 ml-1 mt-1 dark:bg-slate-800 p-1 text-black mx-auto footcont backGround-color width-footer">
+      <div className="container-fluid flex gap-15 ml-1 mt-1 dark:bg-slate-800 p-1 text-black mx-auto footcont backGround-color width-footer" style={{backgroundColor:`${contect?.footerColor}`}}>
         <div className="w-2/5 space-x-4  space-y-6 footitm ">
           <h3
             style={{
@@ -487,9 +508,10 @@ const Footer = () => {
             trgfd
           </p>
           <div className="flex space-x-4 text-2xl">
-            <FaFacebook style={{ color: "blue" }} />
-            <FaInstagram style={{ color: "green" }} />
-            <FaLinkedin style={{ color: "green" }} />
+            <a href={contect?.fb}><FaFacebook style={{ color: "blue" }} /></a>
+            <a href={contect?.instagram}><FaInstagram style={{ color: "green" }} /></a>
+            <a href={contect?.linkedIn}><FaLinkedin style={{ color: "green" }} /></a>
+            <a href={contect?.twitter}><FaTwitter style={{ color: "blue" }}/> </a>
           </div>
         </div>
         <div className=" md:flex flex-col  w-1/5  space-y-6 footitm footer">
@@ -595,10 +617,10 @@ const Footer = () => {
         </div>
       </div>
 
-      <hr className="w-full text-white" />
+      {/* <hr className="w-full text-white" /> */}
       {/*<img src={img} style={{ width: "100%", marginLeft: "0" }} />*/}
-      <div className="flex justify-between items-center text-white bg-black  p-4 footcont2">
-        <div className="flex justify-between flex-wrap items-center text-white w-1/2 p-1 footitm2">
+      <div className="flex justify-between items-center text-white  p-4 footcont2 mt-1" style={{backgroundColor:`${contect?.footerColor}`}}>
+        <div className="flex justify-between flex-wrap items-center text-white w-1/2 p-1 footitm2" >
           <div className="flex gap-2">
             <i
               class="fa-solid fa-bag-shopping mt-1"

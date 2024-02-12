@@ -20,6 +20,7 @@ import Baseurl from "../../../Baseurl";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "./Navbar.css";
+import { connect } from "formik";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -186,8 +187,26 @@ const Navbar = () => {
     }
   };
 
+  //get all contect Detail
+  const [contect, setContect] = useState([]);
+  const getContect = async () => {
+    let url = `${Baseurl()}api/v1/admin/ContactDetails/viewContactDetails`;
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("boon")}`,
+        },
+      });
+      setContect(res.data.data);
+      console.log("contect data",res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getSubCat();
+    getContect();
   }, []);
 
   //apply filter
@@ -425,7 +444,7 @@ const Navbar = () => {
     <>
       <div
         className="container-fluid  justify-center gap-6 flex  px-6 h-20 items-center  text-black "
-        style={{ backgroundColor: "#A6DED2" }}
+        style={{backgroundColor:`${contect?.headerColor}`}}
       >
         {show ? <Login /> : ""}
         {regShow ? <SignUp /> : ""}
@@ -438,7 +457,8 @@ const Navbar = () => {
           >
             <img
               className="w-38 md:w-32"
-              src={logo}
+              // src={logo}
+              src={contect?.image}
               style={{ width: "100%" }}
               alt=""
             />

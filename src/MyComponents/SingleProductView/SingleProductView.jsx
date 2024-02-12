@@ -153,10 +153,11 @@ const SingleProductView = () => {
         </div>
         <div className="mobileviewcontr">
           <div className="mobileviewdetail">
+            <div style={{display:"flex",cursor:"pointer"}}><p onClick={()=>navigate("/")}>Home Screen/</p><p>Product Screen</p></div>
             <h6>{singleData?.name}</h6>
             <h6>Product MRP : {singleData?.mrp}</h6>
             <h6>
-              Product Price : <del>{singleData?.price}</del>
+              Product Price : <del>{singleData?.mrp}</del>
             </h6>
             <h6>Extra Save &#x20B9; {singleData?.discountAmount} off</h6>
             <h6>

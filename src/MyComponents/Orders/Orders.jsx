@@ -7,17 +7,19 @@ import Footer from "../Homepage/Footer/Footer";
 import Baseurl from "../../Baseurl";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Form,Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [review,setReview]=useState("");
+  //jdflj
+  const [reviewBool,setReviewsBool]=useState(false);
+  const [productId,setProductId]=useState("")
 
-  const userData = JSON.parse(localStorage.getItem("userDataBoon"));
-
-  console.log("userdata information", userData);
 
   const getOrders = async () => {
-    console.log("ls", localStorage.getItem("boon"));
-    // let url = `${Baseurl()}api/v1/orders/${userData?._id}`;
+   
     let url = `${Baseurl()}api/v1/orders`;
     try {
       const res = await axios.get(url, {
@@ -26,13 +28,36 @@ const Orders = () => {
         },
       });
 
-      console.log("order data after api calling", res.data);
+
       setOrders(res.data.reverse());
-      console.log("order data after api calling", orders);
+
     } catch (error) {
       console.log(error);
     }
   };
+
+const handleReviews=async(e)=>{
+  e.preventDefault();
+  let url = `${Baseurl()}api/v1/add/product/review`;
+  const token = localStorage.getItem("boon");
+ 
+    const payload = {
+      comment: review,
+      productId:productId
+    };
+    try {
+      const res = await axios.put(url, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setReview("");
+      setReviewsBool(false)
+      toast.success("Thank you for review ");
+    } catch (error) {
+      console.log(error);
+    }
+}
+
+
   useEffect(() => {
     getOrders();
   }, []);
@@ -72,8 +97,15 @@ const Orders = () => {
                                 <p>Quantity: {p?.quantity}</p>
 
                                 <p> &#x20b9; {p?.price}</p>
-                                <hr style={{ color: "black" }}></hr>
-                              </div>
+                              
+                                <Button variant="primary" type="button" style={{width:"150px",padding:"5px"}} onClick={()=>{
+                                  setReviewsBool(true)
+                                  setProductId(p?.productId)}
+                                  }>
+                                  Add Reviews
+                                 </Button>
+                             
+                                </div>
                             ))}
                           </div>
                           <div className="cartcont2r">
@@ -83,6 +115,20 @@ const Orders = () => {
                           </div>
                         </div>
                       </div>
+                      {
+                        reviewBool && <div>
+                        <Form onSubmit={handleReviews}>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Add Reviews</Form.Label>
+          <Form.Control as="textarea" rows={3} col={400} placeholder="Add reviews" value={review} onChange={(e)=>setReview(e.target.value)}/>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+                        </div>
+                      }
+                      
                     </>
                   );
                 })}
