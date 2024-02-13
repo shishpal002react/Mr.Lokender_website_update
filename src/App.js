@@ -58,6 +58,8 @@ import Trucks_Exchange from "./MyComponents/Homepage/Footer/FotterPage/Trucks_Ex
 import About from "./MyComponents/Homepage/Footer/FotterPage/About";
 import Track_Order from "./MyComponents/Homepage/Footer/FotterPage/Track_Order";
 import PayRentSucessfullPage from "./MyComponents/PaymentSuccessfulPage/PayRentSucessfullPage";
+import Wallet from "./MyComponents/Wallet/Wallet";
+import PatmentSucessFullWallet from "./MyComponents/PaymentSuccessfulPage/PatmentSucessFullWallet";
 
 const App = () => {
   return (
@@ -78,6 +80,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         {/* <Route path="/orders/:id" element={<Orders />} /> */}
         <Route path="/orders" element={<Orders />} />
+        <Route path="/wallet" element={<Wallet />} />
         <Route path="/all-category" element={<MobileCategory />} />
         <Route path="/my-profile" element={<Profile />} />
         <Route path="/grocery" element={<Grocery />} />
@@ -104,6 +107,11 @@ const App = () => {
         <Route
           path="/payment/successfullpage/:id"
           element={<PaymentSuccessfulPage />}
+        />
+        {/* wallet */}
+        <Route
+          path="/payment/successfullpageWallet/:id"
+          element={<PatmentSucessFullWallet />}
         />
         <Route
           path="/payment/payRentsuccessfullpage/:id"

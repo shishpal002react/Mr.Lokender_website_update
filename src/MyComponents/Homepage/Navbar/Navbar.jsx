@@ -1134,6 +1134,30 @@ const Navbar = () => {
                         </a>
                       </li>
                       <li
+                        onClick={() => navigate(`/wallet`)}
+                        className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100"
+                      >
+                        <FiShoppingBag className="text-2xl" />
+                        <a
+                          class="
+            dropdown-item
+            text-base
+            py-2
+            px-2
+            font-medium
+            block
+            w-full
+            whitespace-nowrap
+            bg-transparent
+            text-gray-700
+            hover:bg-gray-100
+          "
+                          href="#"
+                        >
+                          My Wallet
+                        </a>
+                      </li>
+                      <li
                         onClick={() => navigate("/wishlist")}
                         className="text-black flex items-center space-x-2 mx-2 px-2 rounded-lg hover:bg-gray-100"
                       >

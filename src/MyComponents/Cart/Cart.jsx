@@ -33,7 +33,6 @@ const Cart = () => {
       // setCartPro(res.data.data.products);
       // console.log("cart produts",res.data);
       setCartProducts(res?.data?.products);
-      console.log("cart data is printed ", res.data.products);
       setCartDetails(res?.data);
     } catch (error) {
       console.log(error);
@@ -116,6 +115,59 @@ const Cart = () => {
       console.log(error);
     }
   };
+
+
+  //payUmoney
+const [hash,setHash]=useState("");
+const [transaction,setTransaction]=useState("")
+
+//generate transaction id
+const generateTransactionId=()=>{
+  const timestamp=Date.now();
+  const randomNum=Math.floor(Math.random()*1000000);
+  const marchantPrefix='T';
+  const transactionId=`${marchantPrefix}${timestamp}${randomNum}`
+  setTransaction(transactionId);
+  return transactionId;
+}
+
+const getHash=async()=>{
+  let url = `${Baseurl()}api/v1/orders`;
+      const body = { address: "123 street" };
+      const res = await axios.post(url, body, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("boon")}`,
+        },
+      });
+      const data= await axios.post(`${Baseurl()}api/v1/orders/payUPayment/${res.data._id}`);
+      setHash(data?.data?.hash)
+}
+
+const handleSubmitPayMoney= async(cartDetails)=>{
+  getHash();
+  const transactionId=generateTransactionId();
+  const paymentData={
+    key: 'RBg4B3',
+    txnid: transactionId,
+    hash : hash,
+    amount: 100, // Set the actual amount
+    productinfo: 'Product Information',
+    firstname: 'John',
+    email: 'john@example.com',
+    phone: '1234567890',
+    surl: 'http://localhost:3000/success', 
+    furl: 'http://localhost:3000/failure', 
+    service_provider: 'payu_paisa',
+  }
+
+  try {
+    const response = await axios.post('https://test.payu.in/_payment', paymentData);
+    console.log(response.data); // Handle the response from PayUmoney
+  } catch (error) {
+    console.error('Error making payment:', error);
+  }
+}
+ 
 
   // Decrease
   const dec = async (id) => {
@@ -343,6 +395,7 @@ const Cart = () => {
 
             <button
               onClick={() => createOrderHandler(cartDetails)}
+              // onClick={() => handleSubmitPayMoney()}
               className="bg-gray-700 text-white text-sm py-[2px] px-2 rounded-md"
               style={{ marginTop: "20px" }}
             >
